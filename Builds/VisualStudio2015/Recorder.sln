@@ -1,0 +1,19 @@
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2015
+Project("{EF70D934-BE99-8CF4-9A49-93BE4BD1A94B}") = "Recorder", "Recorder.vcxproj", "{4AC7B053-2ED8-4435-CAD4-DFA5EFAB38B4}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Win32 = Debug|Win32
+		Release|Win32 = Release|Win32
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{4AC7B053-2ED8-4435-CAD4-DFA5EFAB38B4}.Debug|Win32.ActiveCfg = Debug|Win32
+		{4AC7B053-2ED8-4435-CAD4-DFA5EFAB38B4}.Debug|Win32.Build.0 = Debug|Win32
+		{4AC7B053-2ED8-4435-CAD4-DFA5EFAB38B4}.Release|Win32.ActiveCfg = Release|Win32
+		{4AC7B053-2ED8-4435-CAD4-DFA5EFAB38B4}.Release|Win32.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

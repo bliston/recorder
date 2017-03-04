@@ -249,10 +249,10 @@
  #define JucePlugin_Build_STANDALONE       0
 #endif
 #ifndef  JucePlugin_Name
- #define JucePlugin_Name                   "MidiRecorder"
+ #define JucePlugin_Name                   "Recorder"
 #endif
 #ifndef  JucePlugin_Desc
- #define JucePlugin_Desc                   "MidiRecorder"
+ #define JucePlugin_Desc                   "Recorder"
 #endif
 #ifndef  JucePlugin_Manufacturer
  #define JucePlugin_Manufacturer           "SongWish Inc."
@@ -315,7 +315,7 @@
  #define JucePlugin_AUManufacturerCode     JucePlugin_ManufacturerCode
 #endif
 #ifndef  JucePlugin_CFBundleIdentifier
- #define JucePlugin_CFBundleIdentifier     ca.songwish.MidiRecoder
+ #define JucePlugin_CFBundleIdentifier     ca.songwish.Recorder
 #endif
 #ifndef  JucePlugin_RTASCategory
  #define JucePlugin_RTASCategory           ePlugInCategory_None
