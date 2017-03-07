@@ -33,13 +33,13 @@
         <key>description</key>
         <string>Recorder</string>
         <key>factoryFunction</key>
-        <string>ArrangerAUFactory</string>
+        <string>RecorderAUFactory</string>
         <key>manufacturer</key>
-        <string>SOWI</string>
+        <string>SoWi</string>
         <key>type</key>
         <string>aumi</string>
         <key>subtype</key>
-        <string>MIDR</string>
+        <string>Reco</string>
         <key>version</key>
         <integer>1</integer>
       </dict>

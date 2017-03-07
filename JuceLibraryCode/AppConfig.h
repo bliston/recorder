@@ -264,10 +264,10 @@
  #define JucePlugin_ManufacturerEmail      "info@songwish.ca"
 #endif
 #ifndef  JucePlugin_ManufacturerCode
- #define JucePlugin_ManufacturerCode       0x534f5749 // 'SOWI'
+ #define JucePlugin_ManufacturerCode       0x536f5769 // 'SoWi'
 #endif
 #ifndef  JucePlugin_PluginCode
- #define JucePlugin_PluginCode             0x4d494452 // 'MIDR'
+ #define JucePlugin_PluginCode             0x5265636f // 'Reco'
 #endif
 #ifndef  JucePlugin_IsSynth
  #define JucePlugin_IsSynth                0
@@ -306,16 +306,16 @@
  #define JucePlugin_AUSubType              JucePlugin_PluginCode
 #endif
 #ifndef  JucePlugin_AUExportPrefix
- #define JucePlugin_AUExportPrefix         ArrangerAU
+ #define JucePlugin_AUExportPrefix         RecorderAU
 #endif
 #ifndef  JucePlugin_AUExportPrefixQuoted
- #define JucePlugin_AUExportPrefixQuoted   "ArrangerAU"
+ #define JucePlugin_AUExportPrefixQuoted   "RecorderAU"
 #endif
 #ifndef  JucePlugin_AUManufacturerCode
  #define JucePlugin_AUManufacturerCode     JucePlugin_ManufacturerCode
 #endif
 #ifndef  JucePlugin_CFBundleIdentifier
- #define JucePlugin_CFBundleIdentifier     ca.songwish.Recorder
+ #define JucePlugin_CFBundleIdentifier     ca.songwish.recorder
 #endif
 #ifndef  JucePlugin_RTASCategory
  #define JucePlugin_RTASCategory           ePlugInCategory_None
@@ -333,7 +333,7 @@
  #define JucePlugin_RTASDisableMultiMono   0
 #endif
 #ifndef  JucePlugin_AAXIdentifier
- #define JucePlugin_AAXIdentifier          ca.songwish.Arranger
+ #define JucePlugin_AAXIdentifier          ca.songwish.recorder
 #endif
 #ifndef  JucePlugin_AAXManufacturerCode
  #define JucePlugin_AAXManufacturerCode    JucePlugin_ManufacturerCode
