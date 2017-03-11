@@ -21,11 +21,11 @@ public:
 
 	}
 
-	bool MidiRecorder::isRecording() {
+	bool isRecording() {
 		return isRec;
 	}
 
-	void MidiRecorder::handleIncomingMidiMessage(MidiMessage &message) {
+	void handleIncomingMidiMessage(MidiMessage &message) {
 		if (!isRec)
 			return;
 		double timeStampInMS = Time::getMillisecondCounterHiRes() - startTime;
@@ -33,7 +33,7 @@ public:
 		mms->addEvent(message);
 	}
 
-	void MidiRecorder::startRecording() {
+	void startRecording() {
 		mms = new MidiMessageSequence();
 		mms->clear();
 		startTimer(0);
@@ -45,21 +45,21 @@ public:
 		mms->addEvent(tempoEvent);
 	}
 
-	void MidiRecorder::stopRecording() {
+	void stopRecording() {
 		isRec = false;
 	}
 
-	short MidiRecorder::getTimeFormat()
+	short getTimeFormat()
 	{
 		return ticksPerQuarterNote;
 	}
 
-	double MidiRecorder::getTempo()
+	double getTempo()
 	{
 		return tempo;
 	}
 
-	void MidiRecorder::timerCallback() override
+	void timerCallback() override
 	{
 		//double timeStampInMS = Time::getMillisecondCounterHiRes() - startTime;
 		//if (timeStampInMS >= msPerTick * ticksPerQuarterNote * (prerollLengthInQuarterNotes + recordingLengthInQuarterNotes))
@@ -74,17 +74,17 @@ public:
 		}
 	}
 
-	double MidiRecorder::ticks(double timeStampInMS)
+	double ticks(double timeStampInMS)
 	{
 		return timeStampInMS / msPerTick;
 	}
 
-	MidiMessageSequence* MidiRecorder::getSequence()
+	MidiMessageSequence* getSequence()
 	{
 		return mms;
 	}
 
-	bool MidiRecorder::writeMidiFile(File *myFile)
+	bool writeMidiFile(File *myFile)
 	{
 		MidiFile myMIDIFile;
 		const MidiMessageSequence* mySeq = new MidiMessageSequence(*getSequence());

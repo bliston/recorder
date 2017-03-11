@@ -37,7 +37,7 @@ MidiRecorderAudioProcessorEditor::MidiRecorderAudioProcessorEditor (MidiRecorder
 	playButton.addListener(this);
 	addAndMakeVisible(&playButton);
 
-	setFile(&processor.getMidiPlaybackFile());
+	setFile(processor.getMidiPlaybackFile());
 }
 
 MidiRecorderAudioProcessorEditor::~MidiRecorderAudioProcessorEditor()
@@ -68,10 +68,10 @@ void MidiRecorderAudioProcessorEditor::resized()
 
 void MidiRecorderAudioProcessorEditor::buttonClicked(Button* button)
 {
-	/*File fileToRecordTo(File::getSpecialLocation(File::userDocumentsDirectory)
-		.getNonexistentChildFile("MidiRecording", ".mid"));*/
-	File fileToRecordTo(File("C:\\Middle\\Recordings\\midi")
+	File fileToRecordTo(File::getSpecialLocation(File::userDocumentsDirectory)
 		.getNonexistentChildFile("MidiRecording", ".mid"));
+//	File fileToRecordTo(File("C:\\Middle\\Recordings\\midi")
+//		.getNonexistentChildFile("MidiRecording", ".mid"));
 	processor.setMidiRecordLocation(&fileToRecordTo);
 	if (button == &recordButton)
 	{
@@ -79,7 +79,7 @@ void MidiRecorderAudioProcessorEditor::buttonClicked(Button* button)
 	}
 	else if (button == &stopButton) {
 		processor.stop();
-		setFile(&processor.getMidiPlaybackFile());
+		setFile(processor.getMidiPlaybackFile());
 	}
 	else if (button == &playButton) {
 		processor.play();
@@ -100,13 +100,17 @@ void MidiRecorderAudioProcessorEditor::chooseFile()
 
 	if (chooser.browseForFileToOpen())
 	{
-		File midiPlaybackFile(chooser.getResult());
+		File midiPlaybackFile = chooser.getResult();
 		setFile(&midiPlaybackFile);
 	}
 }
 
 void MidiRecorderAudioProcessorEditor::setFile(File *newFile)
 {
+    if(!newFile->existsAsFile())
+    {
+        return;
+    }
 	auto processor = getProcessor();
 
 	processor->setMidiPlaybackFile(newFile);
@@ -123,6 +127,6 @@ void MidiRecorderAudioProcessorEditor::updateFile(File *file)
 void MidiRecorderAudioProcessorEditor::showPath()
 {
 	auto processor = getProcessor();
-	File file = processor->getMidiPlaybackFile();
-	pathLabel.setText(file.getParentDirectory().getFullPathName(), dontSendNotification);
+	File *file = processor->getMidiPlaybackFile();
+	pathLabel.setText(file->getParentDirectory().getFullPathName(), dontSendNotification);
 }

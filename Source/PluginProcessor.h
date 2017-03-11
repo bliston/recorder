@@ -62,14 +62,14 @@ public:
 	double convertTicksToSeconds(int timeStamp);
 	MidiBuffer allNotesOffBuffer();
 	void setMidiPlaybackFile(File *newMidiPlaybackFile);
-	File getMidiPlaybackFile() { return (midiPlaybackFile); }
+	File *getMidiPlaybackFile() { return (midiPlaybackFile); }
 	void loadMidi();
 	void setTrack(MidiMessageSequence *trk);
 	void setMidiRecordLocation(File *fileToRecordTo);
 	void writeMidiFile();
 
 private:
-	File midiPlaybackFile;
+	File *midiPlaybackFile;
 	File *midiRecordingFile;
 	MidiRecorder midiRecorder;
 	MidiMessageSequence *track;

@@ -26,6 +26,8 @@ MidiRecorderAudioProcessor::MidiRecorderAudioProcessor()
 #endif
 {
 	track = new MidiMessageSequence();
+    midiPlaybackFile = new File();
+    
 }
 
 MidiRecorderAudioProcessor::~MidiRecorderAudioProcessor()
@@ -164,7 +166,7 @@ AudioProcessorEditor* MidiRecorderAudioProcessor::createEditor()
 void MidiRecorderAudioProcessor::getStateInformation (MemoryBlock& destData)
 {
 	auto obj = new DynamicObject();
-	obj->setProperty("midiPlaybackFilePath", midiPlaybackFile.getFullPathName());
+	obj->setProperty("midiPlaybackFilePath", midiPlaybackFile->getFullPathName());
 	MemoryOutputStream out(destData, false);
 	JSON::writeToStream(out, var(obj));
 }
@@ -239,17 +241,17 @@ MidiBuffer MidiRecorderAudioProcessor::allNotesOffBuffer()
 
 void MidiRecorderAudioProcessor::setMidiPlaybackFile(File *newMidiPlaybackFile)
 {
-	midiPlaybackFile = *newMidiPlaybackFile;
+	midiPlaybackFile = newMidiPlaybackFile;
 	loadMidi();
 }
 
 void MidiRecorderAudioProcessor::loadMidi()
 {
-	if (!midiPlaybackFile.existsAsFile())
+	if (!midiPlaybackFile->existsAsFile())
 	{
 		return;
 	}
-	FileInputStream myStream(midiPlaybackFile);
+	FileInputStream myStream(*midiPlaybackFile);
 	MidiFile myMIDIFile;
 	myMIDIFile.readFrom(myStream);
 	const MidiMessageSequence* myTrack = myMIDIFile.getTrack(0);
