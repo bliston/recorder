@@ -14,6 +14,8 @@
 #include "../JuceLibraryCode/JuceHeader.h"
 #include "PluginProcessor.h"
 #include "ClickableLabel.h"
+#include "CustomLookAndFeel.h"
+#include "TemplateOptionButton.h"
 
 //==============================================================================
 /**
@@ -43,9 +45,10 @@ private:
     MidiRecorderAudioProcessor& processor;
 	ClickableLabel fileLabel;
 	ClickableLabel pathLabel;
-	TextButton recordButton;
-	TextButton stopButton;
-	TextButton playButton;
+	RecordButton recordButton;
+	StopButton stopButton;
+	PlayButton playButton;
+    CustomLookAndFeel lookAndFeel;
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (MidiRecorderAudioProcessorEditor)
 };
 

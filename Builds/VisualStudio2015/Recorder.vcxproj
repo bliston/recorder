@@ -131,6 +131,7 @@
     </Bscmake>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\Source\BinaryData.cpp"/>
     <ClCompile Include="..\..\Source\ClickableLabel.cpp"/>
     <ClCompile Include="..\..\Source\MidiRecorder.cpp"/>
     <ClCompile Include="..\..\Source\PluginProcessor.cpp"/>
@@ -1795,6 +1796,10 @@
     <ClCompile Include="..\..\JuceLibraryCode\juce_video.cpp"/>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\Source\AppColours.h"/>
+    <ClInclude Include="..\..\Source\BinaryData.h"/>
+    <ClInclude Include="..\..\Source\CustomLookAndFeel.h"/>
+    <ClInclude Include="..\..\Source\TemplateOptionButton.h"/>
     <ClInclude Include="..\..\Source\ClickableLabel.h"/>
     <ClInclude Include="..\..\Source\PluginProcessor.h"/>
     <ClInclude Include="..\..\Source\PluginEditor.h"/>

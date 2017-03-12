@@ -379,6 +379,9 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\Source\BinaryData.cpp">
+      <Filter>Recorder\Source</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\Source\ClickableLabel.cpp">
       <Filter>Recorder\Source</Filter>
     </ClCompile>
@@ -2214,6 +2217,18 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\Source\AppColours.h">
+      <Filter>Recorder\Source</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\BinaryData.h">
+      <Filter>Recorder\Source</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\CustomLookAndFeel.h">
+      <Filter>Recorder\Source</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\TemplateOptionButton.h">
+      <Filter>Recorder\Source</Filter>
+    </ClInclude>
     <ClInclude Include="..\..\Source\ClickableLabel.h">
       <Filter>Recorder\Source</Filter>
     </ClInclude>

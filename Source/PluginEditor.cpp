@@ -58,12 +58,30 @@ void MidiRecorderAudioProcessorEditor::paint (Graphics& g)
 
 void MidiRecorderAudioProcessorEditor::resized()
 {
-	int numComponents = 5;
-	recordButton.setBounds(0, 0, getWidth() / numComponents, getHeight());
-	stopButton.setBounds(getWidth() / numComponents, 0, getWidth() / numComponents, getHeight());
-	playButton.setBounds(2 * getWidth() / numComponents, 0, getWidth() / numComponents, getHeight());
-	fileLabel.setBounds(3 * getWidth() / numComponents, 0, getWidth() / numComponents, getHeight());
-	pathLabel.setBounds(4 * getWidth() / numComponents, 0, getWidth() / numComponents, getHeight());
+    Rectangle<int> allOpts = getLocalBounds().reduced (10, 10);
+    allOpts.removeFromBottom (allOpts.getHeight() / 2);
+    
+    const int numHorizIcons = 3;
+    const int optStep = allOpts.getWidth() / numHorizIcons;
+    recordButton.setBounds (Rectangle<int> (allOpts.getX() + (0 % numHorizIcons) * optStep,
+                                            allOpts.getY() + 0 * allOpts.getHeight(),
+                                            optStep, allOpts.getHeight() / 1)
+                            .reduced (10, 10));
+    stopButton.setBounds (Rectangle<int> (allOpts.getX() + (1 % numHorizIcons) * optStep,
+                                          allOpts.getY() + 0 * allOpts.getHeight(),
+                                          optStep, allOpts.getHeight() / 1)
+                          .reduced (10, 10));
+    playButton.setBounds (Rectangle<int> (allOpts.getX() + (2 % numHorizIcons) * optStep,
+                                          allOpts.getY() + 0 * allOpts.getHeight(),
+                                          optStep, allOpts.getHeight() / 1)
+                          .reduced (10, 10));
+    
+    Rectangle<int> openButtonBounds = getLocalBounds();
+    openButtonBounds.removeFromBottom (proportionOfHeight (0.12f));
+    openButtonBounds = openButtonBounds.removeFromBottom (120);
+    openButtonBounds.reduce (10, 10);
+    fileLabel.setBounds (openButtonBounds.removeFromLeft ((allOpts.getWidth() / 2) - 20));
+    pathLabel.setBounds (openButtonBounds.reduced (10, 0));
 }
 
 void MidiRecorderAudioProcessorEditor::buttonClicked(Button* button)
