@@ -67,6 +67,8 @@ public:
 	void setTrack(MidiMessageSequence *trk);
 	void setMidiRecordLocation(File *fileToRecordTo);
 	void writeMidiFile();
+	String filePathToMidiPropertyString(String filePath);
+	String midiPropertyStringToFilePath(String fileName);
 
 private:
 	File *midiPlaybackFile;

@@ -89,8 +89,9 @@ public:
 		MidiFile myMIDIFile;
 		const MidiMessageSequence* mySeq = new MidiMessageSequence(*getSequence());
 		myMIDIFile.addTrack(*mySeq);
-		FileOutputStream myStream(*myFile);
-		myMIDIFile.writeTo(myStream);
+		ScopedPointer<FileOutputStream> myStream = new FileOutputStream(*myFile);
+		myMIDIFile.writeTo(*myStream);
+		myStream.release();
 		return true;
 	}
 

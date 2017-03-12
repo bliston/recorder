@@ -165,8 +165,13 @@ AudioProcessorEditor* MidiRecorderAudioProcessor::createEditor()
 //==============================================================================
 void MidiRecorderAudioProcessor::getStateInformation (MemoryBlock& destData)
 {
+	if (!midiPlaybackFile->existsAsFile())
+	{
+		return;
+	}
 	auto obj = new DynamicObject();
-	obj->setProperty("midiPlaybackFilePath", midiPlaybackFile->getFullPathName());
+	String fileName = filePathToMidiPropertyString(midiPlaybackFile->getFullPathName());
+	obj->setProperty("midiPlaybackFileName", fileName);
 	MemoryOutputStream out(destData, false);
 	JSON::writeToStream(out, var(obj));
 }
@@ -175,14 +180,14 @@ void MidiRecorderAudioProcessor::setStateInformation (const void* data, int size
 {
 	MemoryInputStream in(data, sizeInBytes, false);
 	var state = JSON::parse(in);
-	var pathVar = state["midiPlaybackFilePath"];
-	if (pathVar.isString())
+	var fileNameVar = state["midiPlaybackFileName"];
+	if (fileNameVar.isString())
 	{
-		auto midiFilePath = pathVar.toString();
-		if (!midiFilePath.isEmpty())
+		auto midiFileName = fileNameVar.toString();
+		if (!midiFileName.isEmpty())
 		{
-			File file(midiFilePath);
-			setMidiPlaybackFile(&file);
+			String finalPath = midiPropertyStringToFilePath(midiFileName);
+			setMidiPlaybackFile(&File(finalPath));
 		}
 	}
 }
@@ -241,16 +246,12 @@ MidiBuffer MidiRecorderAudioProcessor::allNotesOffBuffer()
 
 void MidiRecorderAudioProcessor::setMidiPlaybackFile(File *newMidiPlaybackFile)
 {
-	midiPlaybackFile = newMidiPlaybackFile;
+	midiPlaybackFile = new File(*newMidiPlaybackFile);
 	loadMidi();
 }
 
 void MidiRecorderAudioProcessor::loadMidi()
 {
-	if (!midiPlaybackFile->existsAsFile())
-	{
-		return;
-	}
 	FileInputStream myStream(*midiPlaybackFile);
 	MidiFile myMIDIFile;
 	myMIDIFile.readFrom(myStream);
@@ -275,4 +276,19 @@ void MidiRecorderAudioProcessor::writeMidiFile()
 		midiRecorder.writeMidiFile(midiRecordingFile);
 		setMidiPlaybackFile(midiRecordingFile);
 	}
+}
+
+String MidiRecorderAudioProcessor::filePathToMidiPropertyString(String filePath)
+{
+	File file(filePath);
+	return file.getFileName();
+}
+
+String MidiRecorderAudioProcessor::midiPropertyStringToFilePath(String fileName)
+{
+	String finalPath;
+	String documentsFolder = File::getSpecialLocation(File::userDocumentsDirectory).getFullPathName();
+	String folder = documentsFolder + "\\Middle\\Projects\\Recordings\\MIDI\\";
+	finalPath = folder + fileName;
+	return finalPath;
 }

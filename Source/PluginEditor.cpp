@@ -68,10 +68,11 @@ void MidiRecorderAudioProcessorEditor::resized()
 
 void MidiRecorderAudioProcessorEditor::buttonClicked(Button* button)
 {
-	File fileToRecordTo(File::getSpecialLocation(File::userDocumentsDirectory)
+	String finalPath;
+	String documentsFolder = File::getSpecialLocation(File::userDocumentsDirectory).getFullPathName();
+	String folder = documentsFolder + "\\Middle\\Projects\\Recordings\\MIDI";
+	File fileToRecordTo(File(folder)
 		.getNonexistentChildFile("MidiRecording", ".mid"));
-//	File fileToRecordTo(File("C:\\Middle\\Recordings\\midi")
-//		.getNonexistentChildFile("MidiRecording", ".mid"));
 	processor.setMidiRecordLocation(&fileToRecordTo);
 	if (button == &recordButton)
 	{
