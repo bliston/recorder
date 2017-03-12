@@ -288,7 +288,7 @@ String MidiRecorderAudioProcessor::midiPropertyStringToFilePath(String fileName)
 {
 	String finalPath;
 	String documentsFolder = File::getSpecialLocation(File::userDocumentsDirectory).getFullPathName();
-	String folder = documentsFolder + "\\Middle\\Projects\\Recordings\\MIDI\\";
+	String folder = documentsFolder + "/Middle/Projects/Recordings/MIDI/";
 	finalPath = folder + fileName;
 	return finalPath;
 }

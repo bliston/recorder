@@ -70,7 +70,7 @@ void MidiRecorderAudioProcessorEditor::buttonClicked(Button* button)
 {
 	String finalPath;
 	String documentsFolder = File::getSpecialLocation(File::userDocumentsDirectory).getFullPathName();
-	String folder = documentsFolder + "\\Middle\\Projects\\Recordings\\MIDI";
+	String folder = documentsFolder + "/Middle/Projects/Recordings/MIDI";
 	File fileToRecordTo(File(folder)
 		.getNonexistentChildFile("MidiRecording", ".mid"));
 	processor.setMidiRecordLocation(&fileToRecordTo);
