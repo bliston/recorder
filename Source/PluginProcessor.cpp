@@ -206,10 +206,14 @@ void MidiRecorderAudioProcessor::startRecording()
 
 void MidiRecorderAudioProcessor::stop()
 {
-	noteOff = true;
-	midiRecorder.stopRecording();
-	writeMidiFile();
-	midiIsPlaying = false;
+    if (isPlaying()) {
+        noteOff = true;
+    }
+    if (isRecording()) {
+        midiRecorder.stopRecording();
+        writeMidiFile();
+        midiIsPlaying = false;
+    }
 }
 
 void MidiRecorderAudioProcessor::play()
@@ -291,4 +295,12 @@ String MidiRecorderAudioProcessor::midiPropertyStringToFilePath(String fileName)
 	String folder = documentsFolder + "/Middle/Projects/Recordings/MIDI/";
 	finalPath = folder + fileName;
 	return finalPath;
+}
+
+bool MidiRecorderAudioProcessor::isRecording () {
+    return midiRecorder.isRecording();
+}
+
+bool MidiRecorderAudioProcessor::isPlaying () {
+    return midiIsPlaying;
 }

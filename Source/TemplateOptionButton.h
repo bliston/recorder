@@ -43,22 +43,26 @@
                 jassert (backSvg != nullptr);
                 
                 hoverBackground = Drawable::createFromSVG (*backSvg);
-                hoverBackground->replaceColour(Colour (0xffDDDDDD), findColour(mainAccentColourId).withAlpha(0.3f));
+                hoverBackground->replaceColour(Colour (0xffDDDDDD), Colours::white);
                 
                 description = "<insert description>";
                 
                 name = "Record";
+                isRecording = false;
+        
             }
             
             void paintButton (Graphics& g, bool isMouseOverButton, bool /*isButtonDown*/) override
             {
                 const Rectangle<float> r (getLocalBounds().toFloat());
                 
-                if (isMouseOverButton)
-                {
+                //if (isMouseOverButton)
+                //{
+
                     if (getStyle() == ImageFitted)
                     {
-                        hoverBackground->drawWithin (g, r , RectanglePlacement::centred, 1.0);
+                        if (isRecording == false)
+                            hoverBackground->drawWithin (g, r , RectanglePlacement::centred, 1.0);
                         thumb->drawWithin (g, r , RectanglePlacement::centred, 1.0);
                     }
                     else
@@ -68,11 +72,26 @@
                         g.setColour (findColour (mainAccentColourId));
                         g.drawRoundedRectangle (r.reduced (0.0f), 10.0f, 1.35f);
                     }
-                }
-                else
-                {
+                //}
+                //else
+                //{
                     if (getStyle() == ImageFitted)
                     {
+                        if (isRecording == true) {
+                            name = "Recording";
+                            hoverBackground->replaceColour(Colours::white, Colours::red.withAlpha(0.3f));
+                            hoverBackground->drawWithin (g, r , RectanglePlacement::centred, 1.0);
+                            thumb->replaceColour(findColour(mainAccentColourId), Colours::red.withAlpha(0.3f));
+                            thumb->drawWithin (g, r , RectanglePlacement::centred, 1.0);
+                            
+                        }
+                        else {
+                            name = "Record";
+                            hoverBackground->replaceColour(Colours::red.withAlpha(0.3f), Colours::white);
+                            hoverBackground->drawWithin (g, r , RectanglePlacement::centred, 1.0);
+                            thumb->replaceColour(Colours::red.withAlpha(0.3f), findColour(mainAccentColourId));
+                            thumb->drawWithin (g, r , RectanglePlacement::centred, 1.0);
+                        }
                         thumb->drawWithin (g, r, RectanglePlacement::centred, 1.0);
                     }
                     else
@@ -80,7 +99,7 @@
                         g.setColour (findColour (mainAccentColourId));
                         g.drawRoundedRectangle (r.reduced (0.0f), 10.0f, 1.35f);
                     }
-                }
+                //}
                 
                 Rectangle<float> textTarget;
                 
@@ -114,7 +133,16 @@
                 return description;
             }
             
+            void setIsRecording(bool isRec) noexcept {
+                isRecording = isRec;
+            }
+            
+            bool getIsRecording() const noexcept {
+                return isRecording;
+            }
+            
         private:
+            bool isRecording;
             CustomLookAndFeel lookAndFeel;
             ScopedPointer<Drawable> thumb, hoverBackground;
             String name, description;
@@ -150,7 +178,7 @@ public:
         jassert (backSvg != nullptr);
         
         hoverBackground = Drawable::createFromSVG (*backSvg);
-        hoverBackground->replaceColour(Colour (0xffDDDDDD), findColour(mainAccentColourId).withAlpha(0.3f));
+        hoverBackground->replaceColour(Colour (0xffDDDDDD), findColour(mainAccentColourId).withAlpha(0.0f));
         
         description = "<insert description>";
         
@@ -268,33 +296,45 @@ public:
     {
         const Rectangle<float> r (getLocalBounds().toFloat());
         
-        if (isMouseOverButton)
+        //if (isMouseOverButton)
+        //{
+        
+        if (getStyle() == ImageFitted)
         {
-            if (getStyle() == ImageFitted)
-            {
+            if (isPlaying == false)
                 hoverBackground->drawWithin (g, r , RectanglePlacement::centred, 1.0);
                 thumb->drawWithin (g, r , RectanglePlacement::centred, 1.0);
             }
-            else
-            {
-                g.setColour (findColour (mainAccentColourId).withAlpha (0.3f));
-                g.fillRoundedRectangle (r.reduced (0.0f), 10.0f);
-                g.setColour (findColour (mainAccentColourId));
-                g.drawRoundedRectangle (r.reduced (0.0f), 10.0f, 1.35f);
+        else
+        {
+            g.setColour (findColour (mainAccentColourId).withAlpha (0.3f));
+            g.fillRoundedRectangle (r.reduced (0.0f), 10.0f);
+            g.setColour (findColour (mainAccentColourId));
+            g.drawRoundedRectangle (r.reduced (0.0f), 10.0f, 1.35f);
+        }
+        //}
+        //else
+        //{
+        if (getStyle() == ImageFitted)
+        {
+            if (isPlaying == true) {
+                name = "Playing";
+                hoverBackground->replaceColour(Colours::white, findColour (mainAccentColourId).withAlpha (0.3f));
+                hoverBackground->drawWithin (g, r , RectanglePlacement::centred, 1.0);
             }
+            else {
+                name = "play";
+                hoverBackground->replaceColour(findColour (mainAccentColourId).withAlpha (0.3f), Colours::white);
+                hoverBackground->drawWithin (g, r , RectanglePlacement::centred, 1.0);
+            }
+            thumb->drawWithin (g, r, RectanglePlacement::centred, 1.0);
         }
         else
         {
-            if (getStyle() == ImageFitted)
-            {
-                thumb->drawWithin (g, r, RectanglePlacement::centred, 1.0);
-            }
-            else
-            {
-                g.setColour (findColour (mainAccentColourId));
-                g.drawRoundedRectangle (r.reduced (0.0f), 10.0f, 1.35f);
-            }
+            g.setColour (findColour (mainAccentColourId));
+            g.drawRoundedRectangle (r.reduced (0.0f), 10.0f, 1.35f);
         }
+        //}
         
         Rectangle<float> textTarget;
         
@@ -328,7 +368,16 @@ public:
         return description;
     }
     
+    void setIsPlaying(bool isPlay) noexcept {
+        isPlaying = isPlay;
+    }
+    
+    bool getIsPlaying() const noexcept {
+        return isPlaying;
+    }
+    
 private:
+    bool isPlaying;
     CustomLookAndFeel lookAndFeel;
     ScopedPointer<Drawable> thumb, hoverBackground;
     String name, description;

@@ -94,14 +94,30 @@ void MidiRecorderAudioProcessorEditor::buttonClicked(Button* button)
 	processor.setMidiRecordLocation(&fileToRecordTo);
 	if (button == &recordButton)
 	{
-		processor.startRecording();
+        if (!processor.isRecording() && !processor.isPlaying()) {
+            processor.startRecording();
+            recordButton.setIsRecording(true);
+            recordButton.repaint();
+            playButton.setIsPlaying(false);
+            recordButton.repaint();
+        }
 	}
 	else if (button == &stopButton) {
+        recordButton.setIsRecording(false);
+        playButton.setIsPlaying(false);
+        recordButton.repaint();
+        playButton.repaint();
 		processor.stop();
 		setFile(processor.getMidiPlaybackFile());
 	}
 	else if (button == &playButton) {
-		processor.play();
+        if (!processor.isRecording()) {
+            processor.play();
+            playButton.setIsPlaying(true);
+            playButton.repaint();
+            recordButton.setIsRecording(false);
+            recordButton.repaint();
+        }
 	}
 }
 

@@ -69,6 +69,8 @@ public:
 	void writeMidiFile();
 	String filePathToMidiPropertyString(String filePath);
 	String midiPropertyStringToFilePath(String fileName);
+    bool isRecording ();
+    bool isPlaying ();
 
 private:
 	File *midiPlaybackFile;
