@@ -139,7 +139,9 @@ void MidiRecorderAudioProcessorEditor::labelClicked(Label *clickedLabel)
 
 void MidiRecorderAudioProcessorEditor::chooseFile()
 {
-	FileChooser chooser("Select an midi file...", File::nonexistent, "*.mid;*.midi;");
+    String documentsFolder = File::getSpecialLocation(File::userDocumentsDirectory).getFullPathName();
+    String folder = documentsFolder + "/Middle/Projects/Recordings/MIDI";
+	FileChooser chooser("Select an midi file...", File(folder), "*.mid;*.midi;");
 	if (chooser.browseForFileToOpen())
 	{
 		File midiPlaybackFile = chooser.getResult();
