@@ -43,8 +43,8 @@ private:
     // This reference is provided as a quick way for your editor to
     // access the processor object that created it.
     MidiRecorderAudioProcessor& processor;
-	ClickableLabel fileLabel;
-	ClickableLabel pathLabel;
+	Label fileLabel;
+	OpenButton openButton;
 	RecordButton recordButton;
 	StopButton stopButton;
 	PlayButton playButton;

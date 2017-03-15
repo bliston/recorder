@@ -13,17 +13,16 @@
 
 //==============================================================================
 MidiRecorderAudioProcessorEditor::MidiRecorderAudioProcessorEditor (MidiRecorderAudioProcessor& p)
-    : AudioProcessorEditor (&p), processor (p), fileLabel(String::empty, "File... (click here to choose)"), pathLabel(String::empty)
+    : AudioProcessorEditor (&p), processor (p)
 {
     // Make sure that before the constructor has finished, you've set the
     // editor's size to whatever you need it to be.
-    setSize (400, 300);
+    setSize (600, 300);
 
+	fileLabel.setJustificationType(Justification::centred);
+	Font font(fileLabel.getHeight() * 0.65f, Font::plain);
+	fileLabel.setFont(font);
 	addAndMakeVisible(&fileLabel);
-	fileLabel.addClickListener(this);
-
-	addAndMakeVisible(&pathLabel);
-	pathLabel.addClickListener(this);
 
 	recordButton.setButtonText("Record");
 	recordButton.addListener(this);
@@ -36,6 +35,10 @@ MidiRecorderAudioProcessorEditor::MidiRecorderAudioProcessorEditor (MidiRecorder
 	playButton.setButtonText("Play");
 	playButton.addListener(this);
 	addAndMakeVisible(&playButton);
+
+	openButton.setButtonText("Open");
+	openButton.addListener(this);
+	addAndMakeVisible(&openButton);
 
 	setFile(processor.getMidiPlaybackFile());
 }
@@ -61,7 +64,7 @@ void MidiRecorderAudioProcessorEditor::resized()
     Rectangle<int> allOpts = getLocalBounds().reduced (10, 10);
     allOpts.removeFromBottom (allOpts.getHeight() / 2);
     
-    const int numHorizIcons = 3;
+    const int numHorizIcons = 4;
     const int optStep = allOpts.getWidth() / numHorizIcons;
     recordButton.setBounds (Rectangle<int> (allOpts.getX() + (0 % numHorizIcons) * optStep,
                                             allOpts.getY() + 0 * allOpts.getHeight(),
@@ -75,13 +78,18 @@ void MidiRecorderAudioProcessorEditor::resized()
                                           allOpts.getY() + 0 * allOpts.getHeight(),
                                           optStep, allOpts.getHeight() / 1)
                           .reduced (10, 10));
+	openButton.setBounds (Rectangle<int>(allOpts.getX() + (3 % numHorizIcons) * optStep,
+		allOpts.getY() + 0 * allOpts.getHeight(),
+		optStep, allOpts.getHeight() / 1)
+		.reduced(10, 10));
     
     Rectangle<int> openButtonBounds = getLocalBounds();
     openButtonBounds.removeFromBottom (proportionOfHeight (0.12f));
     openButtonBounds = openButtonBounds.removeFromBottom (120);
     openButtonBounds.reduce (10, 10);
-    fileLabel.setBounds (openButtonBounds.removeFromLeft ((allOpts.getWidth() / 2) - 20));
-    pathLabel.setBounds (openButtonBounds.reduced (10, 0));
+	//openButton.setBounds(openButtonBounds.reduced(0));
+    //openButton.setBounds (openButtonBounds.removeFromLeft ((allOpts.getWidth())));
+	fileLabel.setBounds (openButtonBounds.reduced (0));
 }
 
 void MidiRecorderAudioProcessorEditor::buttonClicked(Button* button)
@@ -114,25 +122,24 @@ void MidiRecorderAudioProcessorEditor::buttonClicked(Button* button)
         if (!processor.isRecording()) {
             processor.play();
             playButton.setIsPlaying(true);
+			recordButton.setIsRecording(false);
             playButton.repaint();
-            recordButton.setIsRecording(false);
             recordButton.repaint();
         }
-	}
-}
-
-void MidiRecorderAudioProcessorEditor::labelClicked(Label *clickedLabel)
-{
-	if (clickedLabel == &fileLabel)
+	}else if(button == &openButton)
 	{
 		chooseFile();
 	}
 }
 
+void MidiRecorderAudioProcessorEditor::labelClicked(Label *clickedLabel)
+{
+	
+}
+
 void MidiRecorderAudioProcessorEditor::chooseFile()
 {
 	FileChooser chooser("Select an midi file...", File::nonexistent, "*.mid;*.midi;");
-
 	if (chooser.browseForFileToOpen())
 	{
 		File midiPlaybackFile = chooser.getResult();
@@ -163,5 +170,4 @@ void MidiRecorderAudioProcessorEditor::showPath()
 {
 	auto processor = getProcessor();
 	File *file = processor->getMidiPlaybackFile();
-	pathLabel.setText(file->getParentDirectory().getFullPathName(), dontSendNotification);
 }

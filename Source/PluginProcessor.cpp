@@ -212,8 +212,8 @@ void MidiRecorderAudioProcessor::stop()
     if (isRecording()) {
         midiRecorder.stopRecording();
         writeMidiFile();
-        midiIsPlaying = false;
     }
+	midiIsPlaying = false;
 }
 
 void MidiRecorderAudioProcessor::play()

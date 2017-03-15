@@ -184,6 +184,8 @@ namespace BinaryData
     extern const char* keymapper_stop_svg;
     const int          keymapper_stop_svgSize = 1014;
     
+	extern const char* keymapper_open_svg;
+	const int          keymapper_open_svgSize = 1154;
     
 
     // Points to the start of a list of resource names.
