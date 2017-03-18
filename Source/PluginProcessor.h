@@ -17,7 +17,7 @@
 //==============================================================================
 /**
 */
-class MidiRecorderAudioProcessor  : public AudioProcessor
+class MidiRecorderAudioProcessor  : public AudioProcessor, public ChangeBroadcaster
 {
 public:
     //==============================================================================

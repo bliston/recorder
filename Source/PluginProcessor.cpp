@@ -141,6 +141,7 @@ void MidiRecorderAudioProcessor::processBlock (AudioSampleBuffer& buffer, MidiBu
 		{
 			samplesPlayed = 0;
 			midiIsPlaying = false;
+			sendChangeMessage();
 		}
 	}
 	if(noteOff) {
@@ -159,7 +160,9 @@ bool MidiRecorderAudioProcessor::hasEditor() const
 
 AudioProcessorEditor* MidiRecorderAudioProcessor::createEditor()
 {
-    return new MidiRecorderAudioProcessorEditor (*this);
+    auto editor = new MidiRecorderAudioProcessorEditor (*this);
+	addChangeListener(editor);
+	return editor;
 }
 
 //==============================================================================
@@ -201,7 +204,7 @@ AudioProcessor* JUCE_CALLTYPE createPluginFilter()
 
 void MidiRecorderAudioProcessor::startRecording()
 {
-	midiRecorder.startRecording();
+	midiRecorder.enableRecording();
 }
 
 void MidiRecorderAudioProcessor::stop()
@@ -256,11 +259,14 @@ void MidiRecorderAudioProcessor::setMidiPlaybackFile(File *newMidiPlaybackFile)
 
 void MidiRecorderAudioProcessor::loadMidi()
 {
-	FileInputStream myStream(*midiPlaybackFile);
+	ScopedPointer<FileInputStream> myStream = new FileInputStream(*midiPlaybackFile);
 	MidiFile myMIDIFile;
-	myMIDIFile.readFrom(myStream);
-	const MidiMessageSequence* myTrack = myMIDIFile.getTrack(0);
-	setTrack(new MidiMessageSequence(*myTrack));
+	myMIDIFile.readFrom(*myStream);
+	const MidiMessageSequence *myTrack = myMIDIFile.getTrack(0);
+	MidiMessageSequence *trimmedMms = new MidiMessageSequence(*myTrack);
+	myStream.release();
+	//trimmedMms->addTimeToMessages(-trimmedMms->getEventTime(1));
+	setTrack(trimmedMms);
 }
 
 void MidiRecorderAudioProcessor::setTrack(MidiMessageSequence *trk)

@@ -27,26 +27,40 @@ public:
 
 	void handleIncomingMidiMessage(MidiMessage &message) {
 		if (!isRec)
+		{
 			return;
-		double timeStampInMS = Time::getMillisecondCounterHiRes() - startTime;
-		message.setTimeStamp(ticks(timeStampInMS));
-		mms->addEvent(message);
+		}
+		if (isRec && getSequence()->getNumEvents() == 1)
+		{
+			startRecording();
+		}
+		addEvent(message);
 	}
 
-	void startRecording() {
+	void enableRecording() {
+		isRec = true;
 		mms = new MidiMessageSequence();
 		mms->clear();
-		startTimer(0);
-		isRec = true;
-		startTime = Time::getMillisecondCounterHiRes();
 		int microsecondsPerQuarter = (60000.f / tempo) * 1000.f;
 		MidiMessage tempoEvent = MidiMessage::tempoMetaEvent(microsecondsPerQuarter);
 		tempoEvent.setTimeStamp(0);
 		mms->addEvent(tempoEvent);
 	}
 
+	void startRecording() {
+		startTimer(0);
+		startTime = Time::getMillisecondCounterHiRes();
+	}
+
 	void stopRecording() {
 		isRec = false;
+	}
+
+	void addEvent(MidiMessage &message)
+	{
+		double timeStampInMS = Time::getMillisecondCounterHiRes() - startTime;
+		message.setTimeStamp(ticks(timeStampInMS));
+		mms->addEvent(message);
 	}
 
 	short getTimeFormat()
@@ -84,15 +98,16 @@ public:
 		return mms;
 	}
 
-	bool writeMidiFile(File *myFile)
+	void writeMidiFile(File *myFile)
 	{
 		MidiFile myMIDIFile;
-		const MidiMessageSequence* mySeq = new MidiMessageSequence(*getSequence());
-		myMIDIFile.addTrack(*mySeq);
+		myMIDIFile.setTicksPerQuarterNote(getTimeFormat());
+		MidiMessageSequence *mySeq = getSequence();
+		const MidiMessageSequence *editedSeq = new MidiMessageSequence(*mySeq);
+		myMIDIFile.addTrack(*editedSeq);
 		ScopedPointer<FileOutputStream> myStream = new FileOutputStream(*myFile);
 		myMIDIFile.writeTo(*myStream);
 		myStream.release();
-		return true;
 	}
 
 private:

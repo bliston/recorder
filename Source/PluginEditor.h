@@ -22,7 +22,7 @@
 */
 class MidiRecorderAudioProcessorEditor  : public AudioProcessorEditor,
 										  public Button::Listener,
-										  public ClickableLabel::ClickListener
+										  public ChangeListener
 {
 public:
     MidiRecorderAudioProcessorEditor (MidiRecorderAudioProcessor&);
@@ -33,11 +33,12 @@ public:
     void resized() override;
 	MidiRecorderAudioProcessor *getProcessor() const { return static_cast<MidiRecorderAudioProcessor *>(getAudioProcessor()); }
 	void buttonClicked(Button* button) override;
-	void labelClicked(Label *clickedLabel) override;
+	void buttonStateChanged(Button* button) override;
 	void chooseFile();
 	void setFile(File *newFile);
 	void updateFile(File *file);
 	void showPath();
+	void changeListenerCallback(ChangeBroadcaster *source) override;
 
 private:
     // This reference is provided as a quick way for your editor to

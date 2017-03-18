@@ -20,23 +20,20 @@ MidiRecorderAudioProcessorEditor::MidiRecorderAudioProcessorEditor (MidiRecorder
     setSize (600, 300);
 
 	fileLabel.setJustificationType(Justification::centred);
-	Font font(fileLabel.getHeight() * 0.65f, Font::plain);
+	fileLabel.setColour(Label::textColourId, Colours::grey);
+	Font font(20, Font::plain);
 	fileLabel.setFont(font);
 	addAndMakeVisible(&fileLabel);
 
-	recordButton.setButtonText("Record");
 	recordButton.addListener(this);
 	addAndMakeVisible(&recordButton);
 
-	stopButton.setButtonText("Stop");
 	stopButton.addListener(this);
 	addAndMakeVisible(&stopButton);
 
-	playButton.setButtonText("Play");
 	playButton.addListener(this);
 	addAndMakeVisible(&playButton);
 
-	openButton.setButtonText("Open");
 	openButton.addListener(this);
 	addAndMakeVisible(&openButton);
 
@@ -87,9 +84,14 @@ void MidiRecorderAudioProcessorEditor::resized()
     openButtonBounds.removeFromBottom (proportionOfHeight (0.12f));
     openButtonBounds = openButtonBounds.removeFromBottom (120);
     openButtonBounds.reduce (10, 10);
-	//openButton.setBounds(openButtonBounds.reduced(0));
-    //openButton.setBounds (openButtonBounds.removeFromLeft ((allOpts.getWidth())));
 	fileLabel.setBounds (openButtonBounds.reduced (0));
+}
+
+void MidiRecorderAudioProcessorEditor::buttonStateChanged(Button* button)
+{
+	playButton.repaint();
+	stopButton.repaint();
+	recordButton.repaint();
 }
 
 void MidiRecorderAudioProcessorEditor::buttonClicked(Button* button)
@@ -102,39 +104,29 @@ void MidiRecorderAudioProcessorEditor::buttonClicked(Button* button)
 	processor.setMidiRecordLocation(&fileToRecordTo);
 	if (button == &recordButton)
 	{
-        if (!processor.isRecording() && !processor.isPlaying()) {
-            processor.startRecording();
-            recordButton.setIsRecording(true);
-            recordButton.repaint();
-            playButton.setIsPlaying(false);
-            recordButton.repaint();
-        }
+		if (!processor.isRecording() && !processor.isPlaying()) {
+			processor.startRecording();
+			recordButton.setIsRecording(true);
+			playButton.setIsPlaying(false);
+		}
 	}
 	else if (button == &stopButton) {
-        recordButton.setIsRecording(false);
-        playButton.setIsPlaying(false);
-        recordButton.repaint();
-        playButton.repaint();
+		recordButton.setIsRecording(false);
+		playButton.setIsPlaying(false);
 		processor.stop();
 		setFile(processor.getMidiPlaybackFile());
 	}
 	else if (button == &playButton) {
-        if (!processor.isRecording()) {
-            processor.play();
-            playButton.setIsPlaying(true);
+		if (!processor.isRecording()) {
+			processor.play();
+			playButton.setIsPlaying(true);
 			recordButton.setIsRecording(false);
-            playButton.repaint();
-            recordButton.repaint();
-        }
-	}else if(button == &openButton)
+		}
+	}
+	else if (button == &openButton)
 	{
 		chooseFile();
 	}
-}
-
-void MidiRecorderAudioProcessorEditor::labelClicked(Label *clickedLabel)
-{
-	
 }
 
 void MidiRecorderAudioProcessorEditor::chooseFile()
@@ -172,4 +164,9 @@ void MidiRecorderAudioProcessorEditor::showPath()
 {
 	auto processor = getProcessor();
 	File *file = processor->getMidiPlaybackFile();
+}
+
+void MidiRecorderAudioProcessorEditor::changeListenerCallback(ChangeBroadcaster *source)
+{
+	stopButton.triggerClick();
 }
