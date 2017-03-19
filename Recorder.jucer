@@ -58,7 +58,7 @@
         <CONFIGURATION name="Debug" winWarningLevel="4" generateManifest="1" winArchitecture="32-bit"
                        isDebug="1" optimisation="1" targetName="Recorder"/>
         <CONFIGURATION name="Release" winWarningLevel="4" generateManifest="1" winArchitecture="32-bit"
-                       isDebug="0" optimisation="3" targetName="Recorder"/>
+                       isDebug="0" optimisation="3" targetName="Recorder" useRuntimeLibDLL="0"/>
       </CONFIGURATIONS>
       <MODULEPATHS>
         <MODULEPATH id="juce_core" path="../JUCE/modules"/>
