@@ -13,7 +13,6 @@
 
 #include "../JuceLibraryCode/JuceHeader.h"
 #include "PluginProcessor.h"
-#include "ClickableLabel.h"
 #include "CustomLookAndFeel.h"
 #include "TemplateOptionButton.h"
 
@@ -21,8 +20,7 @@
 /**
 */
 class MidiRecorderAudioProcessorEditor  : public AudioProcessorEditor,
-										  public Button::Listener,
-										  public ChangeListener
+										  public Button::Listener
 {
 public:
     MidiRecorderAudioProcessorEditor (MidiRecorderAudioProcessor&);
@@ -38,7 +36,6 @@ public:
 	void setFile(File *newFile);
 	void updateFile(File *file);
 	void showPath();
-	void changeListenerCallback(ChangeBroadcaster *source) override;
 
 private:
     // This reference is provided as a quick way for your editor to

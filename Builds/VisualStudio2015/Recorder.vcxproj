@@ -132,7 +132,6 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="..\..\Source\BinaryData.cpp"/>
-    <ClCompile Include="..\..\Source\ClickableLabel.cpp"/>
     <ClCompile Include="..\..\Source\MidiRecorder.cpp"/>
     <ClCompile Include="..\..\Source\PluginProcessor.cpp"/>
     <ClCompile Include="..\..\Source\PluginEditor.cpp"/>
@@ -1800,7 +1799,6 @@
     <ClInclude Include="..\..\Source\BinaryData.h"/>
     <ClInclude Include="..\..\Source\CustomLookAndFeel.h"/>
     <ClInclude Include="..\..\Source\TemplateOptionButton.h"/>
-    <ClInclude Include="..\..\Source\ClickableLabel.h"/>
     <ClInclude Include="..\..\Source\PluginProcessor.h"/>
     <ClInclude Include="..\..\Source\PluginEditor.h"/>
     <ClInclude Include="..\..\..\JUCE\modules\juce_audio_basics\buffers\juce_AudioChannelSet.h"/>

@@ -165,8 +165,3 @@ void MidiRecorderAudioProcessorEditor::showPath()
 	auto processor = getProcessor();
 	File *file = processor->getMidiPlaybackFile();
 }
-
-void MidiRecorderAudioProcessorEditor::changeListenerCallback(ChangeBroadcaster *source)
-{
-	stopButton.triggerClick();
-}

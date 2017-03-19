@@ -141,7 +141,6 @@ void MidiRecorderAudioProcessor::processBlock (AudioSampleBuffer& buffer, MidiBu
 		{
 			samplesPlayed = 0;
 			midiIsPlaying = false;
-			sendChangeMessage();
 		}
 	}
 	if(noteOff) {
@@ -160,9 +159,7 @@ bool MidiRecorderAudioProcessor::hasEditor() const
 
 AudioProcessorEditor* MidiRecorderAudioProcessor::createEditor()
 {
-    auto editor = new MidiRecorderAudioProcessorEditor (*this);
-	addChangeListener(editor);
-	return editor;
+    return new MidiRecorderAudioProcessorEditor (*this);
 }
 
 //==============================================================================

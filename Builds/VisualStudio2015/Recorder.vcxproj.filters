@@ -382,9 +382,6 @@
     <ClCompile Include="..\..\Source\BinaryData.cpp">
       <Filter>Recorder\Source</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\Source\ClickableLabel.cpp">
-      <Filter>Recorder\Source</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\Source\MidiRecorder.cpp">
       <Filter>Recorder\Source</Filter>
     </ClCompile>
@@ -2227,9 +2224,6 @@
       <Filter>Recorder\Source</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\TemplateOptionButton.h">
-      <Filter>Recorder\Source</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Source\ClickableLabel.h">
       <Filter>Recorder\Source</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\PluginProcessor.h">

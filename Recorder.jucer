@@ -19,10 +19,6 @@
             file="Source/CustomLookAndFeel.h"/>
       <FILE id="Z78kEj" name="TemplateOptionButton.h" compile="0" resource="0"
             file="Source/TemplateOptionButton.h"/>
-      <FILE id="zJ0VKX" name="ClickableLabel.cpp" compile="1" resource="0"
-            file="Source/ClickableLabel.cpp"/>
-      <FILE id="udZcEy" name="ClickableLabel.h" compile="0" resource="0"
-            file="Source/ClickableLabel.h"/>
       <FILE id="zvJx5S" name="MidiRecorder.cpp" compile="1" resource="0"
             file="Source/MidiRecorder.cpp"/>
       <FILE id="tleXzY" name="PluginProcessor.cpp" compile="1" resource="0"
