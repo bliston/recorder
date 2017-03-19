@@ -47,74 +47,33 @@ public:
         description = "<insert description>";
                 
         name = "Record";
-        isRecording = false;
         
     }
-            
-    void paintButton (Graphics& g, bool isMouseOverButton, bool /*isButtonDown*/) override
+    
+    void paintButton(Graphics& g, bool isMouseOverButton, bool /*isButtonDown*/) override
     {
-        const Rectangle<float> r (getLocalBounds().toFloat());
-                
-        //if (isMouseOverButton)
-        //{
-
-            if (getStyle() == ImageFitted)
-            {
-                if (isRecording == false)
-                    hoverBackground->drawWithin (g, r , RectanglePlacement::centred, 1.0);
-                thumb->drawWithin (g, r , RectanglePlacement::centred, 1.0);
-            }
-            else
-            {
-                g.setColour (findColour (mainAccentColourId).withAlpha (0.3f));
-                g.fillRoundedRectangle (r.reduced (0.0f), 10.0f);
-                g.setColour (findColour (mainAccentColourId));
-                g.drawRoundedRectangle (r.reduced (0.0f), 10.0f, 1.35f);
-            }
-        //}
-        //else
-        //{
-            if (getStyle() == ImageFitted)
-            {
-                if (isRecording == true) {
-                    name = "Recording";
-                    hoverBackground->replaceColour(Colours::white, Colours::red.withAlpha(0.3f));
-                    hoverBackground->drawWithin (g, r , RectanglePlacement::centred, 1.0);
-                    thumb->replaceColour(findColour(mainAccentColourId), Colours::red.withAlpha(0.3f));
-                    thumb->drawWithin (g, r , RectanglePlacement::centred, 1.0);
-                            
-                }
-                else {
-                    name = "Record";
-                    hoverBackground->replaceColour(Colours::red.withAlpha(0.3f), Colours::white);
-                    hoverBackground->drawWithin (g, r , RectanglePlacement::centred, 1.0);
-                    thumb->replaceColour(Colours::red.withAlpha(0.3f), findColour(mainAccentColourId));
-                    thumb->drawWithin (g, r , RectanglePlacement::centred, 1.0);
-                }
-                //thumb->drawWithin (g, r, RectanglePlacement::centred, 1.0);
-            }
-            else
-            {
-                g.setColour (findColour (mainAccentColourId));
-                g.drawRoundedRectangle (r.reduced (0.0f), 10.0f, 1.35f);
-            }
-        //}
-                
+        const Rectangle<float> r(getLocalBounds().toFloat());
+        
+        if (isRecording == false) {
+            name = "Record";
+            hoverBackground->replaceColour(Colours::red.withAlpha(0.3f), Colours::white);
+            hoverBackground->drawWithin (g, r , RectanglePlacement::centred, 1.0);
+            thumb->replaceColour(Colour (0xff000000), findColour(mainAccentColourId));
+            thumb->drawWithin(g, r, RectanglePlacement::centred, 1.0);
+        }
+        else {
+            name = "Recording";
+            hoverBackground->replaceColour(Colours::white, Colours::red.withAlpha(0.3f));
+            hoverBackground->drawWithin (g, r , RectanglePlacement::centred, 1.0);
+            thumb->replaceColour(findColour(mainAccentColourId), Colour (0xff000000));
+            thumb->drawWithin(g, r, RectanglePlacement::centred, 1.0);
+        }
+        
         Rectangle<float> textTarget;
-                
-        // center the text for the text buttons or position the text in the image buttons
-        if (getStyle() != ImageFitted)
-        {
-            textTarget = getLocalBounds().toFloat();
-        }
-        else
-        {
-            textTarget = RectanglePlacement (RectanglePlacement::centred).appliedTo (thumb->getDrawableBounds(), r);
-            textTarget = textTarget.removeFromBottom (textTarget.getHeight() * 0.3f);
-        }
-                
-        g.setColour (findColour (mainBackgroundColourId).contrasting());
-        g.drawText (name, textTarget, Justification::centred, true);
+        textTarget = RectanglePlacement(RectanglePlacement::centred).appliedTo(thumb->getDrawableBounds(), r);
+        textTarget = textTarget.removeFromBottom(textTarget.getHeight() * 0.3f);
+        g.setColour(findColour(mainBackgroundColourId).contrasting());
+        g.drawText(name, textTarget, Justification::centred, true);
     }
             
     void resized() override
@@ -181,53 +140,19 @@ public:
         description = "<insert description>";
         
         name = "Stop";
+
     }
     
     void paintButton (Graphics& g, bool isMouseOverButton, bool /*isButtonDown*/) override
     {
         const Rectangle<float> r (getLocalBounds().toFloat());
         
-        if (isMouseOverButton)
-        {
-            if (getStyle() == ImageFitted)
-            {
-                hoverBackground->drawWithin (g, r , RectanglePlacement::centred, 1.0);
-                thumb->drawWithin (g, r , RectanglePlacement::centred, 1.0);
-            }
-            else
-            {
-                g.setColour (findColour (mainAccentColourId).withAlpha (0.3f));
-                g.fillRoundedRectangle (r.reduced (0.0f), 10.0f);
-                g.setColour (findColour (mainAccentColourId));
-                g.drawRoundedRectangle (r.reduced (0.0f), 10.0f, 1.35f);
-            }
-        }
-        else
-        {
-            if (getStyle() == ImageFitted)
-            {
-                thumb->drawWithin (g, r, RectanglePlacement::centred, 1.0);
-            }
-            else
-            {
-                g.setColour (findColour (mainAccentColourId));
-                g.drawRoundedRectangle (r.reduced (0.0f), 10.0f, 1.35f);
-            }
-        }
-        
+        hoverBackground->drawWithin (g, r , RectanglePlacement::centred, 1.0);
+        thumb->drawWithin (g, r , RectanglePlacement::centred, 1.0);
+
         Rectangle<float> textTarget;
-        
-        // center the text for the text buttons or position the text in the image buttons
-        if (getStyle() != ImageFitted)
-        {
-            textTarget = getLocalBounds().toFloat();
-        }
-        else
-        {
-            textTarget = RectanglePlacement (RectanglePlacement::centred).appliedTo (thumb->getDrawableBounds(), r);
-            textTarget = textTarget.removeFromBottom (textTarget.getHeight() * 0.3f);
-        }
-        
+        textTarget = RectanglePlacement (RectanglePlacement::centred).appliedTo (thumb->getDrawableBounds(), r);
+        textTarget = textTarget.removeFromBottom (textTarget.getHeight() * 0.3f);
         g.setColour (findColour (mainBackgroundColourId).contrasting());
         g.drawText (name, textTarget, Justification::centred, true);
     }
@@ -282,70 +207,34 @@ public:
 		jassert(backSvg != nullptr);
 
 		hoverBackground = Drawable::createFromSVG(*backSvg);
-		hoverBackground->replaceColour(Colour(0xffDDDDDD), findColour(mainAccentColourId).withAlpha(0.3f));
+        hoverBackground->replaceColour(Colour(0xffDDDDDD), Colours::white);
 
 		description = "<insert description>";
 
 		name = "Play";
+
 	}
 
 	void paintButton(Graphics& g, bool isMouseOverButton, bool /*isButtonDown*/) override
 	{
 		const Rectangle<float> r(getLocalBounds().toFloat());
-
-		//if (isMouseOverButton)
-		//{
-
-		if (getStyle() == ImageFitted)
-		{
-			if (isPlaying == false)
-				hoverBackground->drawWithin(g, r, RectanglePlacement::centred, 1.0);
-			thumb->drawWithin(g, r, RectanglePlacement::centred, 1.0);
-		}
-		else
-		{
-			g.setColour(findColour(mainAccentColourId).withAlpha(0.3f));
-			g.fillRoundedRectangle(r.reduced(0.0f), 10.0f);
-			g.setColour(findColour(mainAccentColourId));
-			g.drawRoundedRectangle(r.reduced(0.0f), 10.0f, 1.35f);
-		}
-		//}
-		//else
-		//{
-		if (getStyle() == ImageFitted)
-		{
-			if (isPlaying == true) {
-				name = "Playing";
-				hoverBackground->replaceColour(Colours::white, findColour(mainAccentColourId).withAlpha(0.3f));
-				hoverBackground->drawWithin(g, r, RectanglePlacement::centred, 1.0);
-			}
-			else {
-				name = "play";
-				hoverBackground->replaceColour(findColour(mainAccentColourId).withAlpha(0.3f), Colours::white);
-				hoverBackground->drawWithin(g, r, RectanglePlacement::centred, 1.0);
-			}
-			thumb->drawWithin(g, r, RectanglePlacement::centred, 1.0);
-		}
-		else
-		{
-			g.setColour(findColour(mainAccentColourId));
-			g.drawRoundedRectangle(r.reduced(0.0f), 10.0f, 1.35f);
-		}
-		//}
+		
+        if (isPlaying == false) {
+            name = "Play";
+            hoverBackground->replaceColour(findColour(mainAccentColourId).withAlpha(0.3f), Colours::white);
+            hoverBackground->drawWithin(g, r, RectanglePlacement::centred, 1.0);
+            thumb->drawWithin(g, r, RectanglePlacement::centred, 1.0);
+        }
+        else {
+            name = "Playing";
+            hoverBackground->replaceColour(Colours::white, findColour(mainAccentColourId).withAlpha(0.3f));
+            hoverBackground->drawWithin(g, r, RectanglePlacement::centred, 1.0);
+            thumb->drawWithin(g, r, RectanglePlacement::centred, 1.0);
+        }
 
 		Rectangle<float> textTarget;
-
-		// center the text for the text buttons or position the text in the image buttons
-		if (getStyle() != ImageFitted)
-		{
-			textTarget = getLocalBounds().toFloat();
-		}
-		else
-		{
-			textTarget = RectanglePlacement(RectanglePlacement::centred).appliedTo(thumb->getDrawableBounds(), r);
-			textTarget = textTarget.removeFromBottom(textTarget.getHeight() * 0.3f);
-		}
-
+        textTarget = RectanglePlacement(RectanglePlacement::centred).appliedTo(thumb->getDrawableBounds(), r);
+        textTarget = textTarget.removeFromBottom(textTarget.getHeight() * 0.3f);
 		g.setColour(findColour(mainBackgroundColourId).contrasting());
 		g.drawText(name, textTarget, Justification::centred, true);
 	}
@@ -416,54 +305,19 @@ public:
 		name = "Open";
 	}
 
-	void paintButton(Graphics& g, bool isMouseOverButton, bool /*isButtonDown*/) override
-	{
-		const Rectangle<float> r(getLocalBounds().toFloat());
-
-		if (isMouseOverButton)
-		{
-			if (getStyle() == ImageFitted)
-			{
-				hoverBackground->drawWithin(g, r, RectanglePlacement::centred, 1.0);
-				thumb->drawWithin(g, r, RectanglePlacement::centred, 1.0);
-			}
-			else
-			{
-				g.setColour(findColour(mainAccentColourId).withAlpha(0.3f));
-				g.fillRoundedRectangle(r.reduced(0.0f), 10.0f);
-				g.setColour(findColour(mainAccentColourId));
-				g.drawRoundedRectangle(r.reduced(0.0f), 10.0f, 1.35f);
-			}
-		}
-		else
-		{
-			if (getStyle() == ImageFitted)
-			{
-				thumb->drawWithin(g, r, RectanglePlacement::centred, 1.0);
-			}
-			else
-			{
-				g.setColour(findColour(mainAccentColourId));
-				g.drawRoundedRectangle(r.reduced(0.0f), 10.0f, 1.35f);
-			}
-		}
-
-		Rectangle<float> textTarget;
-
-		// center the text for the text buttons or position the text in the image buttons
-		if (getStyle() != ImageFitted)
-		{
-			textTarget = getLocalBounds().toFloat();
-		}
-		else
-		{
-			textTarget = RectanglePlacement(RectanglePlacement::centred).appliedTo(thumb->getDrawableBounds(), r);
-			textTarget = textTarget.removeFromBottom(textTarget.getHeight() * 0.3f);
-		}
-
-		g.setColour(findColour(mainBackgroundColourId).contrasting());
-		g.drawText(name, textTarget, Justification::centred, true);
-	}
+    void paintButton (Graphics& g, bool isMouseOverButton, bool /*isButtonDown*/) override
+    {
+        const Rectangle<float> r (getLocalBounds().toFloat());
+        
+        hoverBackground->drawWithin (g, r , RectanglePlacement::centred, 1.0);
+        thumb->drawWithin (g, r , RectanglePlacement::centred, 1.0);
+        
+        Rectangle<float> textTarget;
+        textTarget = RectanglePlacement (RectanglePlacement::centred).appliedTo (thumb->getDrawableBounds(), r);
+        textTarget = textTarget.removeFromBottom (textTarget.getHeight() * 0.3f);
+        g.setColour (findColour (mainBackgroundColourId).contrasting());
+        g.drawText (name, textTarget, Justification::centred, true);
+    }
 
 	void resized() override
 	{

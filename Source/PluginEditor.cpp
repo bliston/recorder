@@ -38,6 +38,10 @@ MidiRecorderAudioProcessorEditor::MidiRecorderAudioProcessorEditor (MidiRecorder
 	addAndMakeVisible(&openButton);
 
 	setFile(processor.getMidiPlaybackFile());
+    
+    updateButtonState();
+    // keeps updating button highlighting based on button states
+    startTimer (100);
 }
 
 MidiRecorderAudioProcessorEditor::~MidiRecorderAudioProcessorEditor()
@@ -51,9 +55,6 @@ MidiRecorderAudioProcessorEditor::~MidiRecorderAudioProcessorEditor()
 void MidiRecorderAudioProcessorEditor::paint (Graphics& g)
 {
     g.fillAll (Colours::white);
-
-    g.setColour (Colours::black);
-    g.setFont (15.0f);
 }
 
 void MidiRecorderAudioProcessorEditor::resized()
@@ -85,14 +86,24 @@ void MidiRecorderAudioProcessorEditor::resized()
     openButtonBounds = openButtonBounds.removeFromBottom (120);
     openButtonBounds.reduce (10, 10);
 	fileLabel.setBounds (openButtonBounds.reduced (0));
+    
+    updateButtonState();
 }
 
-void MidiRecorderAudioProcessorEditor::buttonStateChanged(Button* button)
+void MidiRecorderAudioProcessorEditor::timerCallback()
 {
-	playButton.repaint();
-	stopButton.repaint();
-	recordButton.repaint();
+    updateButtonState();
 }
+
+void MidiRecorderAudioProcessorEditor::updateButtonState ()
+{
+    playButton.setIsPlaying(processor.isPlaying());
+    recordButton.setIsRecording(processor.isRecording());
+    playButton.repaint();
+    stopButton.repaint();
+    recordButton.repaint();
+}
+
 
 void MidiRecorderAudioProcessorEditor::buttonClicked(Button* button)
 {
@@ -106,27 +117,23 @@ void MidiRecorderAudioProcessorEditor::buttonClicked(Button* button)
 	{
 		if (!processor.isRecording() && !processor.isPlaying()) {
 			processor.startRecording();
-			recordButton.setIsRecording(true);
-			playButton.setIsPlaying(false);
+
 		}
 	}
 	else if (button == &stopButton) {
-		recordButton.setIsRecording(false);
-		playButton.setIsPlaying(false);
 		processor.stop();
 		setFile(processor.getMidiPlaybackFile());
 	}
 	else if (button == &playButton) {
 		if (!processor.isRecording()) {
 			processor.play();
-			playButton.setIsPlaying(true);
-			recordButton.setIsRecording(false);
 		}
 	}
 	else if (button == &openButton)
 	{
 		chooseFile();
 	}
+    updateButtonState();
 }
 
 void MidiRecorderAudioProcessorEditor::chooseFile()

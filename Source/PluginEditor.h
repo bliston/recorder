@@ -20,7 +20,8 @@
 /**
 */
 class MidiRecorderAudioProcessorEditor  : public AudioProcessorEditor,
-										  public Button::Listener
+										  public Button::Listener,
+                                          private Timer
 {
 public:
     MidiRecorderAudioProcessorEditor (MidiRecorderAudioProcessor&);
@@ -31,11 +32,11 @@ public:
     void resized() override;
 	MidiRecorderAudioProcessor *getProcessor() const { return static_cast<MidiRecorderAudioProcessor *>(getAudioProcessor()); }
 	void buttonClicked(Button* button) override;
-	void buttonStateChanged(Button* button) override;
 	void chooseFile();
 	void setFile(File *newFile);
 	void updateFile(File *file);
 	void showPath();
+    void updateButtonState();
 
 private:
     // This reference is provided as a quick way for your editor to
@@ -47,6 +48,7 @@ private:
 	StopButton stopButton;
 	PlayButton playButton;
     CustomLookAndFeel lookAndFeel;
+    void timerCallback() override;
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (MidiRecorderAudioProcessorEditor)
 };
 
