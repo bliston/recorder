@@ -53,7 +53,10 @@ public:
 	}
 
 	void stopRecording() {
-		addEvents(allNotesOffSequence());
+		if(mms->getEndTime() != 0)
+		{
+			addEvents(allNotesOffSequence());
+		}
 		isRec = false;
 	}
 
@@ -70,6 +73,7 @@ public:
 		double timeStampInMS = Time::getMillisecondCounterHiRes() - startTime;
 		message.setTimeStamp(ticks(timeStampInMS));
 		mms->addEvent(message);
+		mms->updateMatchedPairs();
 	}
 
 	short getTimeFormat()
