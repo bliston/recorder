@@ -53,7 +53,16 @@ public:
 	}
 
 	void stopRecording() {
+		addEvents(allNotesOffSequence());
 		isRec = false;
+	}
+
+	void addEvents(MidiMessageSequence &message)
+	{
+		for (int i = 0; i < message.getNumEvents(); i++)
+		{
+			addEvent(message.getEventPointer(i)->message);
+		}
 	}
 
 	void addEvent(MidiMessage &message)
@@ -108,6 +117,19 @@ public:
 		ScopedPointer<FileOutputStream> myStream = new FileOutputStream(*myFile);
 		myMIDIFile.writeTo(*myStream);
 		myStream.release();
+	}
+
+	MidiMessageSequence allNotesOffSequence()
+	{
+		MidiMessageSequence midi;
+		for (int i = 0; i < 128; i++)
+		{
+			MidiMessage messageOff1(MidiMessage::noteOff(1, i));
+			MidiMessage messageOff2(MidiMessage::noteOff(2, i));
+			midi.addEvent(messageOff1, 0);
+			midi.addEvent(messageOff2, 0);
+		}
+		return midi;
 	}
 
 private:

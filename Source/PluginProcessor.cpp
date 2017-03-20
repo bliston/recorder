@@ -187,7 +187,12 @@ void MidiRecorderAudioProcessor::setStateInformation (const void* data, int size
 		if (!midiFileName.isEmpty())
 		{
 			String finalPath = midiPropertyStringToFilePath(midiFileName);
-			setMidiPlaybackFile(new File(finalPath));
+			File *file = new File(finalPath);
+			if (file->existsAsFile())
+			{
+				setMidiPlaybackFile(file);
+			}
+
 		}
 	}
 }
