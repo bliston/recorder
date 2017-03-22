@@ -60,7 +60,7 @@ public:
 		isRec = false;
 	}
 
-	void addEvents(MidiMessageSequence &message)
+	void addEvents(MidiMessageSequence message)
 	{
 		for (int i = 0; i < message.getNumEvents(); i++)
 		{
@@ -68,7 +68,7 @@ public:
 		}
 	}
 
-	void addEvent(MidiMessage &message)
+	void addEvent(MidiMessage message)
 	{
 		double timeStampInMS = Time::getMillisecondCounterHiRes() - startTime;
 		message.setTimeStamp(ticks(timeStampInMS));
