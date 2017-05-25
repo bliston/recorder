@@ -2217,10 +2217,10 @@
     <ClInclude Include="..\..\Source\AppColours.h">
       <Filter>Recorder\Source</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Source\BinaryData.h">
+    <ClInclude Include="..\..\Source\CustomLookAndFeel.h">
       <Filter>Recorder\Source</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Source\CustomLookAndFeel.h">
+    <ClInclude Include="..\..\Source\BinaryData.h">
       <Filter>Recorder\Source</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\TemplateOptionButton.h">

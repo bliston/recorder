@@ -176,16 +176,16 @@ namespace BinaryData
     const int          middle_synth_instrument_svgSize = 9994;
     
     extern const char* keymapper_record_svg;
-    const int          keymapper_record_svgSize = 1118;
+    const int          keymapper_record_svgSize = 699;
     
     extern const char* keymapper_play_svg;
-    const int          keymapper_play_svgSize = 988;
+    const int          keymapper_play_svgSize = 569;
     
     extern const char* keymapper_stop_svg;
-    const int          keymapper_stop_svgSize = 1014;
+    const int          keymapper_stop_svgSize = 595;
     
 	extern const char* keymapper_open_svg;
-	const int          keymapper_open_svgSize = 1154;
+	const int          keymapper_open_svgSize = 735;
     
 
     // Points to the start of a list of resource names.

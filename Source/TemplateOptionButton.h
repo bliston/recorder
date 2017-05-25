@@ -42,7 +42,7 @@ public:
         jassert (backSvg != nullptr);
                 
         hoverBackground = Drawable::createFromSVG (*backSvg);
-        hoverBackground->replaceColour(Colour (0xffDDDDDD), Colours::white);
+        hoverBackground->replaceColour(Colour (0xffDDDDDD), Colours::transparentWhite);
                 
         description = "<insert description>";
                 
@@ -53,26 +53,28 @@ public:
     void paintButton(Graphics& g, bool isMouseOverButton, bool /*isButtonDown*/) override
     {
         const Rectangle<float> r(getLocalBounds().toFloat());
+        g.setColour (findColour (mainAccentColourId));
+        g.drawRect (r);
         
         if (isRecording == false) {
             name = "Record";
-            hoverBackground->replaceColour(Colours::red.withAlpha(0.3f), Colours::white);
+            hoverBackground->replaceColour(Colours::red.withAlpha(0.3f), Colours::transparentWhite);
             hoverBackground->drawWithin (g, r , RectanglePlacement::centred, 1.0);
             thumb->replaceColour(Colour (0xff000000), findColour(mainAccentColourId));
             thumb->drawWithin(g, r, RectanglePlacement::centred, 1.0);
         }
         else {
             name = "Recording";
-            hoverBackground->replaceColour(Colours::white, Colours::red.withAlpha(0.3f));
-            hoverBackground->drawWithin (g, r , RectanglePlacement::centred, 1.0);
-            thumb->replaceColour(findColour(mainAccentColourId), Colour (0xff000000));
+            //thumb->replaceColour(Colour (0xff000000), findColour(mainAccentColourId));
             thumb->drawWithin(g, r, RectanglePlacement::centred, 1.0);
+            g.setColour (Colours::red.withAlpha(0.3f));
+            g.fillRect(r);
         }
         
         Rectangle<float> textTarget;
         textTarget = RectanglePlacement(RectanglePlacement::centred).appliedTo(thumb->getDrawableBounds(), r);
         textTarget = textTarget.removeFromBottom(textTarget.getHeight() * 0.3f);
-        g.setColour(findColour(mainBackgroundColourId).contrasting());
+        g.setColour (findColour (mainAccentColourId));
         g.drawText(name, textTarget, Justification::centred, true);
     }
             
@@ -146,6 +148,8 @@ public:
     void paintButton (Graphics& g, bool isMouseOverButton, bool /*isButtonDown*/) override
     {
         const Rectangle<float> r (getLocalBounds().toFloat());
+        g.setColour (findColour (mainAccentColourId));
+        g.drawRect (r);
         
         hoverBackground->drawWithin (g, r , RectanglePlacement::centred, 1.0);
         thumb->drawWithin (g, r , RectanglePlacement::centred, 1.0);
@@ -153,7 +157,7 @@ public:
         Rectangle<float> textTarget;
         textTarget = RectanglePlacement (RectanglePlacement::centred).appliedTo (thumb->getDrawableBounds(), r);
         textTarget = textTarget.removeFromBottom (textTarget.getHeight() * 0.3f);
-        g.setColour (findColour (mainBackgroundColourId).contrasting());
+        g.setColour (findColour (mainAccentColourId));
         g.drawText (name, textTarget, Justification::centred, true);
     }
     
@@ -207,7 +211,7 @@ public:
 		jassert(backSvg != nullptr);
 
 		hoverBackground = Drawable::createFromSVG(*backSvg);
-        hoverBackground->replaceColour(Colour(0xffDDDDDD), Colours::white);
+        hoverBackground->replaceColour(Colour(0xffDDDDDD), Colours::transparentWhite);
 
 		description = "<insert description>";
 
@@ -218,24 +222,27 @@ public:
 	void paintButton(Graphics& g, bool isMouseOverButton, bool /*isButtonDown*/) override
 	{
 		const Rectangle<float> r(getLocalBounds().toFloat());
-		
+        g.setColour (findColour (mainAccentColourId));
+        g.drawRect (r);
+        
         if (isPlaying == false) {
             name = "Play";
-            hoverBackground->replaceColour(findColour(mainAccentColourId).withAlpha(0.3f), Colours::white);
+            hoverBackground->replaceColour(findColour(mainAccentColourId).withAlpha(0.3f), Colours::transparentWhite);
             hoverBackground->drawWithin(g, r, RectanglePlacement::centred, 1.0);
             thumb->drawWithin(g, r, RectanglePlacement::centred, 1.0);
         }
         else {
             name = "Playing";
-            hoverBackground->replaceColour(Colours::white, findColour(mainAccentColourId).withAlpha(0.3f));
-            hoverBackground->drawWithin(g, r, RectanglePlacement::centred, 1.0);
+            thumb->replaceColour(Colour (0xff000000), findColour(mainAccentColourId));
             thumb->drawWithin(g, r, RectanglePlacement::centred, 1.0);
+            g.setColour (findColour(mainAccentColourId).withAlpha(0.3f));
+            g.fillRect(r);
         }
 
 		Rectangle<float> textTarget;
         textTarget = RectanglePlacement(RectanglePlacement::centred).appliedTo(thumb->getDrawableBounds(), r);
         textTarget = textTarget.removeFromBottom(textTarget.getHeight() * 0.3f);
-		g.setColour(findColour(mainBackgroundColourId).contrasting());
+		g.setColour (findColour (mainAccentColourId));
 		g.drawText(name, textTarget, Justification::centred, true);
 	}
 
@@ -308,6 +315,8 @@ public:
     void paintButton (Graphics& g, bool isMouseOverButton, bool /*isButtonDown*/) override
     {
         const Rectangle<float> r (getLocalBounds().toFloat());
+        g.setColour (findColour (mainAccentColourId));
+        g.drawRect (r);
         
         hoverBackground->drawWithin (g, r , RectanglePlacement::centred, 1.0);
         thumb->drawWithin (g, r , RectanglePlacement::centred, 1.0);
@@ -315,7 +324,7 @@ public:
         Rectangle<float> textTarget;
         textTarget = RectanglePlacement (RectanglePlacement::centred).appliedTo (thumb->getDrawableBounds(), r);
         textTarget = textTarget.removeFromBottom (textTarget.getHeight() * 0.3f);
-        g.setColour (findColour (mainBackgroundColourId).contrasting());
+        g.setColour (findColour (mainAccentColourId));
         g.drawText (name, textTarget, Justification::centred, true);
     }
 

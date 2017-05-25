@@ -17,10 +17,9 @@ MidiRecorderAudioProcessorEditor::MidiRecorderAudioProcessorEditor (MidiRecorder
 {
     // Make sure that before the constructor has finished, you've set the
     // editor's size to whatever you need it to be.
-    setSize (600, 300);
-
+    setSize (500, 200);
 	fileLabel.setJustificationType(Justification::centred);
-	fileLabel.setColour(Label::textColourId, Colours::grey);
+	fileLabel.setColour(Label::textColourId, findColour(mainAccentColourId));
 	Font font(20, Font::plain);
 	fileLabel.setFont(font);
 	addAndMakeVisible(&fileLabel);
@@ -39,6 +38,7 @@ MidiRecorderAudioProcessorEditor::MidiRecorderAudioProcessorEditor (MidiRecorder
 
 	setFile(processor.getMidiPlaybackFile());
     
+    
     updateButtonState();
     // keeps updating button highlighting based on button states
     startTimer (100);
@@ -54,37 +54,41 @@ MidiRecorderAudioProcessorEditor::~MidiRecorderAudioProcessorEditor()
 //==============================================================================
 void MidiRecorderAudioProcessorEditor::paint (Graphics& g)
 {
-    g.fillAll (Colours::white);
+    g.fillAll (findColour(mainBackgroundColourId));
+
 }
 
 void MidiRecorderAudioProcessorEditor::resized()
 {
     Rectangle<int> allOpts = getLocalBounds().reduced (10, 10);
-    allOpts.removeFromBottom (allOpts.getHeight() / 2);
+    allOpts.removeFromLeft(50);
+    allOpts.removeFromRight(50);
+    allOpts.removeFromBottom (allOpts.getHeight() / 3);
+    allOpts.removeFromTop (allOpts.getHeight() / 3);
     
     const int numHorizIcons = 4;
     const int optStep = allOpts.getWidth() / numHorizIcons;
     recordButton.setBounds (Rectangle<int> (allOpts.getX() + (0 % numHorizIcons) * optStep,
                                             allOpts.getY() + 0 * allOpts.getHeight(),
                                             optStep, allOpts.getHeight() / 1)
-                            .reduced (10, 10));
+                            .reduced (0, 0));
     stopButton.setBounds (Rectangle<int> (allOpts.getX() + (1 % numHorizIcons) * optStep,
                                           allOpts.getY() + 0 * allOpts.getHeight(),
                                           optStep, allOpts.getHeight() / 1)
-                          .reduced (10, 10));
+                          .reduced (0, 0));
     playButton.setBounds (Rectangle<int> (allOpts.getX() + (2 % numHorizIcons) * optStep,
                                           allOpts.getY() + 0 * allOpts.getHeight(),
                                           optStep, allOpts.getHeight() / 1)
-                          .reduced (10, 10));
+                          .reduced (0, 0));
 	openButton.setBounds (Rectangle<int>(allOpts.getX() + (3 % numHorizIcons) * optStep,
 		allOpts.getY() + 0 * allOpts.getHeight(),
 		optStep, allOpts.getHeight() / 1)
-		.reduced(10, 10));
+		.reduced(0, 0));
     
     Rectangle<int> openButtonBounds = getLocalBounds();
-    openButtonBounds.removeFromBottom (proportionOfHeight (0.12f));
+    //openButtonBounds.removeFromBottom (proportionOfHeight (0.12f));
     openButtonBounds = openButtonBounds.removeFromBottom (120);
-    openButtonBounds.reduce (10, 10);
+    openButtonBounds.reduce (0, 0);
 	fileLabel.setBounds (openButtonBounds.reduced (0));
     
     updateButtonState();
