@@ -71,7 +71,9 @@ public:
 	String midiPropertyStringToFilePath(String fileName);
     bool isRecording ();
     bool isPlaying ();
-
+    double getPlaybackPositionTime();
+    double getPlaybackEndTime();
+    
 private:
 	File *midiPlaybackFile;
 	File *midiRecordingFile;
@@ -80,6 +82,7 @@ private:
 	ScopedPointer<MidiBuffer> midiBuffer = new MidiBuffer();
 	double rate;
 	int samplesPlayed = 0;
+    int endTimeInSamples = 1;
 	bool midiIsPlaying = false;
 	bool noteOff = false;
     //==============================================================================

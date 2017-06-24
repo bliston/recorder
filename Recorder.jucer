@@ -13,14 +13,14 @@
   <MAINGROUP id="bDngU8" name="Recorder">
     <GROUP id="{1D26B760-E797-60D2-D486-3A67186D157A}" name="Source">
       <FILE id="wI9Mr3" name="AppColours.h" compile="0" resource="0" file="Source/AppColours.h"/>
-      <FILE id="Zrbd3D" name="CustomLookAndFeel.h" compile="0" resource="0"
-            file="Source/CustomLookAndFeel.h"/>
       <FILE id="ZbKoEi" name="BinaryData.cpp" compile="1" resource="0" file="Source/BinaryData.cpp"/>
       <FILE id="KvuVcd" name="BinaryData.h" compile="0" resource="0" file="Source/BinaryData.h"/>
       <FILE id="Z78kEj" name="TemplateOptionButton.h" compile="0" resource="0"
             file="Source/TemplateOptionButton.h"/>
       <FILE id="zvJx5S" name="MidiRecorder.cpp" compile="1" resource="0"
             file="Source/MidiRecorder.cpp"/>
+      <FILE id="gmYz2r" name="MiddleLookAndFeel.h" compile="0" resource="0"
+            file="Source/MiddleLookAndFeel.h"/>
       <FILE id="tleXzY" name="PluginProcessor.cpp" compile="1" resource="0"
             file="Source/PluginProcessor.cpp"/>
       <FILE id="AxtfMv" name="PluginProcessor.h" compile="0" resource="0"

@@ -135,7 +135,7 @@ void MidiRecorderAudioProcessor::processBlock (AudioSampleBuffer& buffer, MidiBu
 	if (midiIsPlaying) {
 		int sampleDeltaToAdd = -samplesPlayed;
 		midi.addEvents(*midiBuffer, samplesPlayed, buffer.getNumSamples(), sampleDeltaToAdd);
-		int endTimeInSamples = (int)(rate * convertTicksToSeconds(track->getEndTime()));
+		endTimeInSamples = (int)(rate * convertTicksToSeconds(track->getEndTime()));
 		samplesPlayed += buffer.getNumSamples();
 		if (samplesPlayed >= endTimeInSamples)
 		{
@@ -206,6 +206,7 @@ AudioProcessor* JUCE_CALLTYPE createPluginFilter()
 
 void MidiRecorderAudioProcessor::startRecording()
 {
+
 	midiRecorder.enableRecording();
 }
 
@@ -218,6 +219,7 @@ void MidiRecorderAudioProcessor::stop()
         midiRecorder.stopRecording();
         writeMidiFile();
     }
+    samplesPlayed = 0;
 	midiIsPlaying = false;
 }
 
@@ -311,4 +313,12 @@ bool MidiRecorderAudioProcessor::isRecording () {
 
 bool MidiRecorderAudioProcessor::isPlaying () {
     return midiIsPlaying;
+}
+
+double MidiRecorderAudioProcessor::getPlaybackPositionTime() {
+    return samplesPlayed;
+}
+
+double MidiRecorderAudioProcessor::getPlaybackEndTime() {
+    return endTimeInSamples;
 }

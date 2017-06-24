@@ -13,8 +13,21 @@
 
 #include "../JuceLibraryCode/JuceHeader.h"
 #include "PluginProcessor.h"
-#include "CustomLookAndFeel.h"
-#include "TemplateOptionButton.h"
+#include "MiddleLookAndFeel.h"
+
+namespace Icons
+{
+    const String Done = CharPointer_UTF8("\uE5CA");
+    const String Play = CharPointer_UTF8("\uE037");
+    const String Pause = CharPointer_UTF8("\uE034");
+    const String Rewind = CharPointer_UTF8("\uE045");
+    const String FastForward = CharPointer_UTF8("\uE044");
+    const String Record = CharPointer_UTF8("\uE061");
+    const String Stop = CharPointer_UTF8("\uE047");
+    const String FolderOpen = CharPointer_UTF8("\uE2C7");
+    const String Smiley1 = CharPointer_UTF8("\uE813");
+    
+}
 
 //==============================================================================
 /**
@@ -43,11 +56,12 @@ private:
     // access the processor object that created it.
     MidiRecorderAudioProcessor& processor;
 	Label fileLabel;
-	OpenButton openButton;
-	RecordButton recordButton;
-	StopButton stopButton;
-	PlayButton playButton;
-    CustomLookAndFeel lookAndFeel;
+	TextButton openButton;
+	TextButton recordButton;
+	TextButton stopButton;
+	TextButton playButton;
+    Slider playHeadSlider;
+    MiddleLookAndFeel lookAndFeel;
     void timerCallback() override;
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (MidiRecorderAudioProcessorEditor)
 };

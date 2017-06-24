@@ -5,6 +5,7 @@
 #ifndef BINARYDATA_H_62491730_INCLUDED
 #define BINARYDATA_H_62491730_INCLUDED
 
+
 namespace BinaryData
 {
     extern const char*   gradlewrapper_jar;
@@ -155,13 +156,13 @@ namespace BinaryData
     const int            wizard_StaticLibrary_svgSize = 3563;
     
     extern const char* middle_record_svg;
-    const int          middle_record_svgSize = 1103;
+    const int          middle_record_svgSize = 719;
     
     extern const char* middle_highlight_svg;
     const int          middle_highlight_svgSize = 886;
     
     extern const char* middle_keys_svg;
-    const int          middle_keys_svgSize = 1356;
+    const int          middle_keys_svgSize = 1010;
     
     extern const char* middle_therapeutic_logo_svg;
     const int          middle_therapeutic_logo_svgSize = 3647;
@@ -170,33 +171,31 @@ namespace BinaryData
     const int          middle_blank_svgSize = 447;
     
     extern const char* middle_sampled_instrument_svg;
-    const int          middle_sampled_instrument_svgSize = 5967;
+    const int          middle_sampled_instrument_svgSize = 5583;
     
     extern const char* middle_synth_instrument_svg;
     const int          middle_synth_instrument_svgSize = 9994;
     
-    extern const char* keymapper_record_svg;
-    const int          keymapper_record_svgSize = 699;
+    extern const char* quicksand_regular_ttf;
+    const int          quicksand_regular_ttf_Size = 23824;
     
-    extern const char* keymapper_play_svg;
-    const int          keymapper_play_svgSize = 569;
+    extern const char* material_icons_regular_ttf;
+    const int          material_icons_regular_ttf_Size = 128180;
     
-    extern const char* keymapper_stop_svg;
-    const int          keymapper_stop_svgSize = 595;
+    extern const char* comfortaa_regular_ttf;
+    const int          comfortaa_regular_ttf_Size = 135304;
     
-	extern const char* keymapper_open_svg;
-	const int          keymapper_open_svgSize = 735;
-    
-
     // Points to the start of a list of resource names.
     extern const char* namedResourceList[];
 
     // Number of elements in the namedResourceList array.
-    const int namedResourceListSize = 49;
+    //const int namedResourceListSize = 49;
 
     // If you provide the name of one of the binary resource variables above, this function will
     // return the corresponding data and its size (or a null pointer if the name isn't found).
     const char* getNamedResource (const char* resourceNameUTF8, int& dataSizeInBytes) throw();
 }
+
+
 
 #endif

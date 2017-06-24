@@ -1796,9 +1796,9 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\Source\AppColours.h"/>
-    <ClInclude Include="..\..\Source\CustomLookAndFeel.h"/>
     <ClInclude Include="..\..\Source\BinaryData.h"/>
     <ClInclude Include="..\..\Source\TemplateOptionButton.h"/>
+    <ClInclude Include="..\..\Source\MiddleLookAndFeel.h"/>
     <ClInclude Include="..\..\Source\PluginProcessor.h"/>
     <ClInclude Include="..\..\Source\PluginEditor.h"/>
     <ClInclude Include="..\..\..\JUCE\modules\juce_audio_basics\buffers\juce_AudioChannelSet.h"/>

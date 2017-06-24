@@ -18,30 +18,52 @@ MidiRecorderAudioProcessorEditor::MidiRecorderAudioProcessorEditor (MidiRecorder
     // Make sure that before the constructor has finished, you've set the
     // editor's size to whatever you need it to be.
     setSize (500, 200);
+    LookAndFeel::setDefaultLookAndFeel(&lookAndFeel);
 	fileLabel.setJustificationType(Justification::centred);
 	fileLabel.setColour(Label::textColourId, findColour(mainAccentColourId));
 	Font font(20, Font::plain);
 	fileLabel.setFont(font);
 	addAndMakeVisible(&fileLabel);
 
+    recordButton.setColour(TextButton::textColourOffId, findColour(mainAccentColourId));
+    recordButton.setColour(TextButton::ColourIds::buttonColourId, findColour(mainBackgroundColourId));
+    recordButton.setConnectedEdges(3);
+    recordButton.setButtonText(Icons::Record + "~");
 	recordButton.addListener(this);
 	addAndMakeVisible(&recordButton);
 
-	stopButton.addListener(this);
-	addAndMakeVisible(&stopButton);
-
+    playButton.setColour(TextButton::textColourOffId, findColour(mainAccentColourId));
+    playButton.setColour(TextButton::ColourIds::buttonColourId, findColour(mainBackgroundColourId));
+    playButton.setConnectedEdges(3);
+    playButton.setButtonText(Icons::Play + "~");
 	playButton.addListener(this);
 	addAndMakeVisible(&playButton);
-
+    
+    stopButton.setColour(TextButton::textColourOffId, findColour(mainAccentColourId));
+    stopButton.setColour(TextButton::ColourIds::buttonColourId, findColour(mainBackgroundColourId));
+    stopButton.setConnectedEdges(3);
+    stopButton.setButtonText(Icons::Stop + "~");
+    stopButton.addListener(this);
+    addAndMakeVisible(&stopButton);
+    
+    openButton.setColour(TextButton::textColourOffId, findColour(mainAccentColourId));
+    openButton.setColour(TextButton::ColourIds::buttonColourId, findColour(mainBackgroundColourId));
+    openButton.setConnectedEdges(3);
+    openButton.setButtonText(Icons::FolderOpen + "~");
 	openButton.addListener(this);
 	addAndMakeVisible(&openButton);
-
-	setFile(processor.getMidiPlaybackFile());
     
+    addAndMakeVisible(&playHeadSlider);
+    playHeadSlider.setEnabled(false);
+    playHeadSlider.setSliderStyle (Slider::LinearHorizontal);
+    playHeadSlider.setTextBoxStyle (Slider::TextBoxAbove, false, 40, 20);
+    playHeadSlider.setTextBoxIsEditable(false);
     
-    updateButtonState();
-    // keeps updating button highlighting based on button states
+    setFile(processor.getMidiPlaybackFile());
+    
+    //start timer for updating the playHeadSlider
     startTimer (100);
+    
 }
 
 MidiRecorderAudioProcessorEditor::~MidiRecorderAudioProcessorEditor()
@@ -60,54 +82,50 @@ void MidiRecorderAudioProcessorEditor::paint (Graphics& g)
 
 void MidiRecorderAudioProcessorEditor::resized()
 {
-    Rectangle<int> allOpts = getLocalBounds().reduced (10, 10);
-    allOpts.removeFromLeft(50);
-    allOpts.removeFromRight(50);
-    allOpts.removeFromBottom (allOpts.getHeight() / 3);
-    allOpts.removeFromTop (allOpts.getHeight() / 3);
     
-    const int numHorizIcons = 4;
-    const int optStep = allOpts.getWidth() / numHorizIcons;
-    recordButton.setBounds (Rectangle<int> (allOpts.getX() + (0 % numHorizIcons) * optStep,
-                                            allOpts.getY() + 0 * allOpts.getHeight(),
-                                            optStep, allOpts.getHeight() / 1)
-                            .reduced (0, 0));
-    stopButton.setBounds (Rectangle<int> (allOpts.getX() + (1 % numHorizIcons) * optStep,
-                                          allOpts.getY() + 0 * allOpts.getHeight(),
-                                          optStep, allOpts.getHeight() / 1)
-                          .reduced (0, 0));
-    playButton.setBounds (Rectangle<int> (allOpts.getX() + (2 % numHorizIcons) * optStep,
-                                          allOpts.getY() + 0 * allOpts.getHeight(),
-                                          optStep, allOpts.getHeight() / 1)
-                          .reduced (0, 0));
-	openButton.setBounds (Rectangle<int>(allOpts.getX() + (3 % numHorizIcons) * optStep,
-		allOpts.getY() + 0 * allOpts.getHeight(),
-		optStep, allOpts.getHeight() / 1)
-		.reduced(0, 0));
     
-    Rectangle<int> openButtonBounds = getLocalBounds();
-    //openButtonBounds.removeFromBottom (proportionOfHeight (0.12f));
-    openButtonBounds = openButtonBounds.removeFromBottom (120);
-    openButtonBounds.reduce (0, 0);
-	fileLabel.setBounds (openButtonBounds.reduced (0));
-    
-    updateButtonState();
+    int colWidth = proportionOfWidth(1.0f);
+    int rowHeight = proportionOfHeight(1.0f);
+    auto rowArea = getLocalBounds().reduced(0);
+    auto r1 = rowArea.removeFromTop(rowHeight/4);
+    recordButton.setBounds(r1.removeFromLeft(colWidth/4).reduced(0));
+    playButton.setBounds(r1.removeFromLeft(colWidth/4).reduced(0));
+    stopButton.setBounds(r1.removeFromLeft(colWidth/4).reduced(0));
+    openButton.setBounds(r1.removeFromLeft(colWidth/4).reduced(0));
+    auto r2 = rowArea.removeFromTop(rowHeight/4);
+    fileLabel.setBounds(r2.removeFromTop(colWidth).reduced(5));
+    auto r3 = rowArea.removeFromTop(rowHeight/8);
+    playHeadSlider.setBounds(r3.removeFromTop(colWidth).reduced(5));
 }
 
 void MidiRecorderAudioProcessorEditor::timerCallback()
 {
-    updateButtonState();
+    if (processor.getPlaybackEndTime() > 0)
+    playHeadSlider.setRange (0, processor.getPlaybackEndTime(), 0);
+    
+    playHeadSlider.setValue(processor.getPlaybackPositionTime());
+    
+    if (processor.isPlaying() || processor.isRecording()) {
+        stopButton.setEnabled(true);
+    }
+    else {
+        stopButton.setEnabled(false);
+    }
+    
+    if (processor.getMidiPlaybackFile()) {
+        playButton.setEnabled(true);
+    }
+    else {
+        playButton.setEnabled(false);
+    }
+    
+    if (!processor.isRecording()) {
+        playButton.setEnabled(true);
+    }
+    else {
+        playButton.setEnabled(false);
+    }
 }
-
-void MidiRecorderAudioProcessorEditor::updateButtonState ()
-{
-    playButton.setIsPlaying(processor.isPlaying());
-    recordButton.setIsRecording(processor.isRecording());
-    playButton.repaint();
-    stopButton.repaint();
-    recordButton.repaint();
-}
-
 
 void MidiRecorderAudioProcessorEditor::buttonClicked(Button* button)
 {
@@ -121,23 +139,35 @@ void MidiRecorderAudioProcessorEditor::buttonClicked(Button* button)
 	{
 		if (!processor.isRecording() && !processor.isPlaying()) {
 			processor.startRecording();
+            recordButton.setColour(TextButton::textColourOnId, Colours::orangered);
+            recordButton.setColour(TextButton::textColourOffId, Colours::orangered);
+            recordButton.repaint();
 
 		}
 	}
 	else if (button == &stopButton) {
 		processor.stop();
 		setFile(processor.getMidiPlaybackFile());
+        recordButton.setColour(TextButton::textColourOnId, findColour(mainAccentColourId));
+        recordButton.setColour(TextButton::textColourOffId, findColour(mainAccentColourId));
+        recordButton.repaint();
+        playButton.setColour(TextButton::textColourOnId, findColour(mainAccentColourId));
+        playButton.setColour(TextButton::textColourOffId, findColour(mainAccentColourId));
+        playButton.repaint();
 	}
 	else if (button == &playButton) {
-		if (!processor.isRecording()) {
-			processor.play();
-		}
+        if (!processor.isRecording()) {
+            processor.play();
+            recordButton.setColour(TextButton::textColourOnId, findColour(mainAccentColourId));
+            recordButton.setColour(TextButton::textColourOffId, findColour(mainAccentColourId));
+            recordButton.repaint();
+        }
 	}
 	else if (button == &openButton)
 	{
 		chooseFile();
 	}
-    updateButtonState();
+    //updateButtonState();
 }
 
 void MidiRecorderAudioProcessorEditor::chooseFile()
