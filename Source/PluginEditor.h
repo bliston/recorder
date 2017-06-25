@@ -13,7 +13,6 @@
 
 #include "../JuceLibraryCode/JuceHeader.h"
 #include "PluginProcessor.h"
-#include "MiddleLookAndFeel.h"
 
 namespace Icons
 {
@@ -60,7 +59,7 @@ private:
 	TextButton stopButton;
 	TextButton playButton;
     Slider playHeadSlider;
-    MiddleLookAndFeel lookAndFeel;
+    Peels::MiddleLookAndFeel lookAndFeel;
     void timerCallback() override;
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (MidiRecorderAudioProcessorEditor)
 };
