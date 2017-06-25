@@ -17,16 +17,15 @@
 
 namespace Icons
 {
-    const String Done = CharPointer_UTF8("\uE5CA");
-    const String Play = CharPointer_UTF8("\uE037");
-    const String Pause = CharPointer_UTF8("\uE034");
-    const String Rewind = CharPointer_UTF8("\uE045");
-    const String FastForward = CharPointer_UTF8("\uE044");
-    const String Record = CharPointer_UTF8("\uE061");
-    const String Stop = CharPointer_UTF8("\uE047");
-    const String FolderOpen = CharPointer_UTF8("\uE2C7");
-    const String Smiley1 = CharPointer_UTF8("\uE813");
-    
+    const String Done = String::charToString(0xE5CA);
+    const String Play = String::charToString(0xE037);
+    const String Pause = String::charToString(0xE034);
+    const String Rewind = String::charToString(0xE045);
+    const String FastForward = String::charToString(0xE044);
+    const String Record = String::charToString(0xE061);
+    const String Stop = String::charToString(0xE047);
+    const String FolderOpen = String::charToString(0xE2C7);
+    const String Smiley1 = String::charToString(0xE813); 
 }
 
 //==============================================================================
